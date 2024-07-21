@@ -38,4 +38,8 @@ Route::middleware([
         return Inertia::render('Channels');
     })->name('channels');
 
+    Route::get('/publish', function () {
+        return Inertia::render('Publish');
+    })->name('publish');
+
 });
