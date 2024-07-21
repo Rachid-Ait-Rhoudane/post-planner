@@ -53,6 +53,8 @@ const alignmentClasses = computed(() => {
             <slot name="trigger" />
         </div>
 
+        <div v-show="open" @click="open = false" class="fixed inset-0 bg-black/10 z-40"></div>
+
         <transition
             enter-active-class="transition ease-out duration-200"
             enter-from-class="transform opacity-0 scale-95"
