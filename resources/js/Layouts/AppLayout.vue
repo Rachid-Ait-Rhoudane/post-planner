@@ -51,7 +51,7 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink href="#">
+                                <NavLink :href="route('channels')" :active="route().current('channels')">
                                     Channels
                                 </NavLink>
                                 <NavLink href="#">
@@ -200,7 +200,7 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href="#">
+                        <ResponsiveNavLink :href="route('channels')" :active="route().current('channels')">
                             Channels
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href="#">
