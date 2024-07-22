@@ -82,9 +82,9 @@ const submit = () => {
                 </Link>
             </div>
 
-            <Link href="#" class="flex justify-center items-center py-2 my-4 bg-blue-500 hover:bg-blue-600 text-white font-black rounded-md">
+            <a :href="route('facebook_auth')" class="flex justify-center items-center py-2 my-4 bg-blue-500 hover:bg-blue-600 text-white font-black rounded-md">
                 <i class="fa-brands fa-facebook-f text-2xl"></i>
-            </Link>
+            </a>
 
             <div class="flex items-center justify-end mt-8">
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">

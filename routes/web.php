@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\Auth\FacebookAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/auth/redirect', [FacebookAuthController::class, 'redirect'])->name('facebook_auth');
+
+Route::get('/auth/callback', [FacebookAuthController::class, 'callback']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
