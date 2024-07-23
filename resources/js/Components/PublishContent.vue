@@ -90,7 +90,7 @@ const filterDropdown = () => {
                 </transition>
             </div>
 
-            <hr class="absolute bottom-0 left-6 w-[calc(100%-48px)] h-px bg-gray-300">
+            <hr class="absolute bottom-0 left-0 w-full h-px bg-gray-300">
         </div>
 
         <div class="mb-16">
