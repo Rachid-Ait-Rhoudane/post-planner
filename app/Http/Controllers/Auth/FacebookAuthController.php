@@ -19,5 +19,7 @@ class FacebookAuthController extends Controller
         $user = Socialite::driver('facebook')->user();
 
         Log::alert($user->token);
+
+        Log::alert($user->email);
     }
 }
