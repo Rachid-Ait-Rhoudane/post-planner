@@ -12,7 +12,9 @@ class FacebookAuthController extends Controller
     //
 
     public function redirect() {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver('facebook')
+                        ->setScopes(['business_management','email'])
+                        ->redirect();
     }
 
     public function callback() {
