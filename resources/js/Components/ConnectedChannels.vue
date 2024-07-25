@@ -2,6 +2,7 @@
 
 import { ref } from 'vue';
 import Paginator from './Paginator.vue';
+import TextInput from './TextInput.vue';
 import DialogModal from './DialogModal.vue';
 import ChannelCard from './ChannelCard.vue';
 import PrimaryButton from './PrimaryButton.vue';
@@ -21,7 +22,11 @@ let show = ref(false);
             <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600 text-sm sm:text-base">New channel</button>
         </div>
 
-        <div class="divide-y divide-gray-200 mt-6">
+        <div class="w-full my-6">
+            <TextInput class="w-full" placeholder="Search for a channel" />
+        </div>
+
+        <div class="divide-y divide-gray-200">
             <ConnectedChannelCard />
             <ConnectedChannelCard />
             <ConnectedChannelCard />
