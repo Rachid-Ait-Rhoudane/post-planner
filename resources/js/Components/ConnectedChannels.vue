@@ -32,6 +32,9 @@ let show = ref(false);
             <ConnectedChannelCard />
             <ConnectedChannelCard />
             <ConnectedChannelCard />
+            <ConnectedChannelCard />
+            <ConnectedChannelCard />
+            <ConnectedChannelCard />
         </div>
 
         <Paginator class="mt-6" />
