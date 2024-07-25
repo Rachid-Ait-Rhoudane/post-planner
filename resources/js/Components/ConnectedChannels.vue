@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref } from 'vue';
+import Paginator from './Paginator.vue';
 import DialogModal from './DialogModal.vue';
 import ChannelCard from './ChannelCard.vue';
 import PrimaryButton from './PrimaryButton.vue';
@@ -24,7 +25,11 @@ let show = ref(false);
             <ConnectedChannelCard />
             <ConnectedChannelCard />
             <ConnectedChannelCard />
+            <ConnectedChannelCard />
+            <ConnectedChannelCard />
         </div>
+
+        <Paginator class="mt-6" />
 
     </div>
 
