@@ -1,41 +1,21 @@
 <script setup>
 
-import Dropdown from './Dropdown.vue';
-import DropdownLink from './DropdownLink.vue';
-
 </script>
 
 <template>
 
-    <div class="p-2 flex items-center gap-3 odd:bg-gray-100">
-        <div class="relative w-fil">
-            <img class="w-16 aspect-square rounded-full" src="https://prairievillagedentist.com/wp-content/uploads/2019/02/iu-1-1200x800.jpeg" alt="facebook page image" />
-            <span class="w-5 h-5 absolute right-0 bottom-0 bg-blue-500 rounded-full flex items-center justify-center">
-                <i class="fa-brands fa-facebook-f text-xs text-white"></i>
-            </span>
+
+    <div class="py-2 flex items-center gap-3">
+        <div class="bg-blue-500 w-12 h-12 rounded-md flex justify-center items-center">
+            <i class="fa-brands fa-facebook-f text-white text-2xl"></i>
         </div>
         <div class="flex-1 flex justify-between items-center">
             <div>
-                <h3 class="font-bold">Page name</h3>
-                <span class="block text-sm text-gray-500">Facebook page</span>
+                <h3 class="font-bold text-base text-gray-700">Facebook</h3>
+                <span class="block text-xs text-gray-500">Page</span>
             </div>
-
             <div>
-                <Dropdown>
-                    <template #trigger>
-                        <button type="button">
-                            <i class="fa-solid fa-gear text-gray-500"></i>
-                        </button>
-                    </template>
-                    <template #content>
-                        <DropdownLink href="#">
-                            Refresh Connection
-                        </DropdownLink>
-                        <DropdownLink href="#">
-                            Disconnect Channel
-                        </DropdownLink>
-                    </template>
-                </Dropdown>
+                <a href="#" class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Connect</a>
             </div>
         </div>
     </div>
