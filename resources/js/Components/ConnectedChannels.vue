@@ -15,12 +15,12 @@ let show = ref(false);
 
     <div class="p-4">
 
-        <div class="relative pb-6 flex justify-between items-center gap-10">
+        <div class="relative flex justify-between items-center gap-10">
             <h3 class="text-gray-500">All connected channels</h3>
-            <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600">New channel</button>
+            <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600 text-sm sm:text-base">New channel</button>
         </div>
 
-        <div class="divide-y divide-gray-200">
+        <div class="divide-y divide-gray-200 mt-6">
             <ConnectedChannelCard />
             <ConnectedChannelCard />
             <ConnectedChannelCard />
