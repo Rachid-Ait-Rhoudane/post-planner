@@ -88,8 +88,9 @@ const submit = () => {
                 </PrimaryButton>
             </div>
 
-            <a :href="route('facebook_auth')" class="flex justify-center items-center py-2 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-black rounded-md">
-                <i class="fa-brands fa-facebook-f"></i>
+            <a href="#" class="flex justify-center items-center gap-2 py-2 mt-4 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-md">
+                <i class="fa-brands fa-google text-xl"></i>
+                <span>Continue with Google</span>
             </a>
 
         </form>

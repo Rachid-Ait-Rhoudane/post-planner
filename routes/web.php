@@ -3,7 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\Auth\FacebookAuthController;
+use App\Http\Controllers\Auth\AuthWithGoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +16,9 @@ use App\Http\Controllers\Auth\FacebookAuthController;
 |
 */
 
-Route::get('/auth/redirect', [FacebookAuthController::class, 'redirect'])->name('facebook_auth');
+Route::get('/auth/redirect', [AuthWithGoogleController::class, 'create'])->name('google-auth-redirect');
 
-Route::get('/auth/callback', [FacebookAuthController::class, 'callback']);
+Route::get('/auth/callback', [AuthWithGoogleController::class, 'store'])->name('google-auth-callback');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
