@@ -22,8 +22,9 @@ let show = ref(false);
             <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600 text-sm sm:text-base">New channel</button>
         </div>
 
-        <div class="w-full my-6">
-            <TextInput class="w-full" placeholder="Search for a channel" />
+        <div class="relative w-full my-6">
+            <i class="fa-solid fa-magnifying-glass text-xl text-gray-400 absolute top-1/2 -translate-y-1/2 left-2"></i>
+            <TextInput class="w-full pl-8" placeholder="Search for a channel" />
         </div>
 
         <div class="divide-y divide-gray-200">
