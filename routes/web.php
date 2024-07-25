@@ -16,9 +16,9 @@ use App\Http\Controllers\Auth\AuthWithGoogleController;
 |
 */
 
-Route::get('/auth/redirect', [AuthWithGoogleController::class, 'create'])->name('google-auth-redirect');
+Route::get('/auth/google/redirect', [AuthWithGoogleController::class, 'create'])->name('auth-google-redirect');
 
-Route::get('/auth/callback', [AuthWithGoogleController::class, 'store'])->name('google-auth-callback');
+Route::get('/auth/google/callback', [AuthWithGoogleController::class, 'store'])->name('auth-google-callback');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

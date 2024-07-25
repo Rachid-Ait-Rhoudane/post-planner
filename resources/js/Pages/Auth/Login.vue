@@ -88,7 +88,7 @@ const submit = () => {
                 </PrimaryButton>
             </div>
 
-            <a href="#" class="flex justify-center items-center gap-2 py-2 mt-4 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-md">
+            <a class="w-full bg-orange-500 py-2 flex items-center justify-center gap-2 mt-8 text-white rounded-md hover:bg-orange-600" :href="route('auth-google-redirect')">
                 <i class="fa-brands fa-google text-xl"></i>
                 <span>Continue with Google</span>
             </a>
