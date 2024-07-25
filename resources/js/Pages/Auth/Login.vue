@@ -74,24 +74,37 @@ const submit = () => {
                     <Checkbox v-model:checked="form.remember" name="remember" />
                     <span class="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
-                <Link v-if="canResetPassword" :href="route('password.request')" class="text-sm text-gray-600 hover:text-gray-900 hover:underline rounded-md">
-                    Forgot your password?
-                </Link>
-                <Link href="/register" class="text-sm text-gray-600 hover:text-gray-900 hover:underline rounded-md">
-                    Not yet have an account ?
-                </Link>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end gap-2 mt-4">
+
+                <p v-if="canResetPassword" class="text-sm text-gray-600">
+                    Forgot password ?
+                    <Link :href="route('password.request')" class="text-sm text-blue-500 font-bold hover:text-blue-600">
+                        Reset
+                    </Link>
+                </p>
+
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>
             </div>
 
-            <a class="w-full bg-orange-500 py-2 flex items-center justify-center gap-2 mt-8 text-white rounded-md hover:bg-orange-600" :href="route('auth-google-redirect')">
-                <i class="fa-brands fa-google text-xl"></i>
-                <span>Continue with Google</span>
-            </a>
+            <hr class="w-full bg-gray-500 my-4">
+
+            <div class="space-y-4">
+                <a class="w-full bg-orange-500 py-2 flex items-center justify-center gap-2 text-white rounded-md hover:bg-orange-600" :href="route('auth-google-redirect')">
+                    <i class="fa-brands fa-google text-xl"></i>
+                    <span>Continue with Google</span>
+                </a>
+
+                <p class="text-sm text-gray-600">
+                    Not yet have an account ?
+                    <Link href="/register" class="text-sm text-blue-500 font-bold hover:text-blue-600">
+                        Register
+                    </Link>
+                </p>
+            </div>
 
         </form>
     </AuthenticationCard>
