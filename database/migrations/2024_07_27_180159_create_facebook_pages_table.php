@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('facebook_pages', function (Blueprint $table) {
             $table->id();
             $table->string('page_id');
-            $table->string('page_profile_picture');
+            $table->longText('page_profile_picture');
             $table->string('page_name');
             $table->string('page_category');
-            $table->string('page_access_token');
+            $table->longText('page_access_token');
             $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade')
