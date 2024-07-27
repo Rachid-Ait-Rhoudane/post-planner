@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\Auth\AuthWithGoogleController;
 use App\Http\Controllers\Channels\FacebookPageChannelController;
 
@@ -44,9 +45,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/channels', function () {
-        return Inertia::render('Channels');
-    })->name('channels');
+    Route::get('/channels', [ChannelController::class, 'index'])->name('channels');
 
     Route::get('/publish', function () {
         return Inertia::render('Publish');

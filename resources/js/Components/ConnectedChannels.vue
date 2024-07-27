@@ -8,6 +8,13 @@ import ChannelCard from './ChannelCard.vue';
 import PrimaryButton from './PrimaryButton.vue';
 import ConnectedChannelCard from './ConnectedChannelCard.vue';
 
+defineProps({
+    channels: {
+        type: Object,
+        required: true
+    }
+});
+
 let show = ref(false);
 
 
@@ -28,14 +35,11 @@ let show = ref(false);
         </div>
 
         <div class="divide-y divide-gray-200">
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
-            <ConnectedChannelCard />
+            <ConnectedChannelCard
+                v-for="channel in channels.data"
+                :key="channel.id"
+                :channel="channel"
+            />
         </div>
 
         <Paginator class="mt-6" />
