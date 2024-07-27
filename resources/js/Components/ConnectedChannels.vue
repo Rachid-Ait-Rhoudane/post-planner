@@ -1,15 +1,20 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Paginator from './Paginator.vue';
 import TextInput from './TextInput.vue';
+import { router } from '@inertiajs/vue3';
 import DialogModal from './DialogModal.vue';
 import ChannelCard from './ChannelCard.vue';
 import PrimaryButton from './PrimaryButton.vue';
 import ConnectedChannelCard from './ConnectedChannelCard.vue';
 
-defineProps({
+let props = defineProps({
     channels: {
+        type: Object,
+        required: true
+    },
+    filters: {
         type: Object,
         required: true
     }
@@ -17,6 +22,16 @@ defineProps({
 
 let show = ref(false);
 
+let search = ref(props.filters.search);
+
+watch(search, (newValue) => {
+
+    router.get('/channels', {
+        search: newValue
+    }, {
+        preserveState: true
+    });
+});
 
 </script>
 
@@ -31,7 +46,7 @@ let show = ref(false);
 
         <div class="relative w-full my-6">
             <i class="fa-solid fa-magnifying-glass text-xl text-gray-400 absolute top-1/2 -translate-y-1/2 left-2"></i>
-            <TextInput class="w-full pl-8" placeholder="Search for a channel" />
+            <TextInput v-model="search" class="w-full pl-8" placeholder="Search for a channel" />
         </div>
 
         <div class="divide-y divide-gray-200">

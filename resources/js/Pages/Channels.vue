@@ -6,6 +6,10 @@ defineProps({
     channels: {
         type: Object,
         required: true
+    },
+    filters: {
+        type: Object,
+        required: true
     }
 });
 
@@ -16,7 +20,7 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white shadow-xl sm:rounded-lg">
-                    <ConnectedChannels :channels="channels" />
+                    <ConnectedChannels :channels="channels" :filters="filters" />
                 </div>
             </div>
         </div>
