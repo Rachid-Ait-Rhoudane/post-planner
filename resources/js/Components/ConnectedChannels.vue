@@ -42,7 +42,7 @@ let show = ref(false);
             />
         </div>
 
-        <Paginator class="mt-6" />
+        <Paginator v-if="channels.links >= 2" class="mt-6" :links="channels.links" />
 
     </div>
 

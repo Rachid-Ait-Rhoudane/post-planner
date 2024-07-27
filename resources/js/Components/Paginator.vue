@@ -1,25 +1,35 @@
 <script setup>
 
+import { Link } from '@inertiajs/vue3';
+
+defineProps({
+    links: {
+        type: Object,
+        required: true
+    }
+});
+
 </script>
 
 <template>
 
     <div class="flex items-center gap-2 text-xs">
-        <span class="py-2 px-3 border border-gray-300 text-gray-300 rounded-md cursor-not-allowed">
-            <i class="fa-solid fa-angles-left"></i>
-        </span>
-        <a href="#" class="py-2 px-3 border border-gray-300 rounded-md cursor-pointer bg-gray-800 text-white" >
-            1
-        </a>
-        <a href="#" class="py-2 px-3 border border-gray-300 text-gray-500 rounded-md cursor-pointer hover:bg-indigo-500 hover:text-white">
-            2
-        </a>
-        <a href="#" class="py-2 px-3 border border-gray-300 text-gray-500 rounded-md cursor-pointer hover:bg-indigo-500 hover:text-white">
-            3
-        </a>
-        <a href="#" class="py-2 px-3 border border-gray-300 text-gray-500 rounded-md cursor-pointer hover:bg-indigo-500 hover:text-white">
-            <i class="fa-solid fa-angles-right"></i>
-        </a>
+        <template v-for="link in links" :key="link.id">
+            <Link
+                v-if="link.url"
+                :href="link.url"
+                class="py-2 px-3 border border-gray-300 rounded-md cursor-pointer"
+                :class="{'bg-gray-800 text-white': link.active, 'text-gray-500 hover:bg-indigo-500 hover:text-white' : !link.active}"
+                v-html="link.label"
+            >
+            </Link>
+            <span
+                v-else
+                v-html="link.label"
+                class="py-2 px-3 border border-gray-300 text-gray-300 rounded-md cursor-not-allowed"
+            >
+            </span>
+        </template>
     </div>
 
 </template>
