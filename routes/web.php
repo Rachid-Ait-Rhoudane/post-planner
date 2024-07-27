@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Auth\AuthWithGoogleController;
+use App\Http\Controllers\Channels\FacebookPageChannelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ use App\Http\Controllers\Auth\AuthWithGoogleController;
 Route::get('/auth/google/redirect', [AuthWithGoogleController::class, 'create'])->name('auth-google-redirect');
 
 Route::get('/auth/google/callback', [AuthWithGoogleController::class, 'store'])->name('auth-google-callback');
+
+Route::get('/connect/facebook/pages/redirect', [FacebookPageChannelController::class, 'create'])->name('connect-facebook-pages-redirect');
+
+Route::get('/connect/facebook/pages/callback', [FacebookPageChannelController::class, 'store'])->name('connect-facebook-pages-callback');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

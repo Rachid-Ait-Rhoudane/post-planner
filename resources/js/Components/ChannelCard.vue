@@ -15,7 +15,7 @@
                 <span class="block text-xs text-gray-500">Page</span>
             </div>
             <div>
-                <a href="#" class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Connect</a>
+                <a :href="route('connect-facebook-pages-redirect')" class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Connect</a>
             </div>
         </div>
     </div>
