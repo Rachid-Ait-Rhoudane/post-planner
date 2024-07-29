@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Channels;
 
+use App\Services\Facebook;
 use App\Models\FacebookPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -42,16 +43,11 @@ class FacebookPageChannelController extends Controller
             'facebook_user_token' => $facebookUser->token
         ]);
 
-        $response = Http::withToken($request->user()->facebook_user_token)->get('https://graph.facebook.com/v20.0/me/accounts', [
-            'fields' => 'name,category,picture,access_token'
-        ]);
+        $pages = Facebook::pages($request->user()->facebook_user_token);
 
-        if(! $response->successful()) {
-
+        if(! $pages) {
             return redirect()->route('channels')->dangerBanner('Connecting your Facebook pages faild');
         }
-
-        $pages = $response->collect()['data'];
 
         foreach($pages as $page) {
 
@@ -70,11 +66,9 @@ class FacebookPageChannelController extends Controller
 
     public function update(Request $request) {
 
-        $response = Http::withToken($request->user()->facebook_user_token)->get('https://graph.facebook.com/v20.0/'.$request->input('page_id'), [
-            'fields' => 'name,category,picture,access_token'
-        ]);
+        $page = Facebook::refreshPageConnection($request->input('page_id'));
 
-        if(! $response->successful()) {
+        if(! $page) {
 
             return redirect()->route('channels')->dangerBanner('Refreshing your Facebook page connection faild');
         }
