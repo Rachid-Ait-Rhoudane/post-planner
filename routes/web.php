@@ -22,10 +22,6 @@ Route::get('/auth/google/redirect', [AuthWithGoogleController::class, 'create'])
 
 Route::get('/auth/google/callback', [AuthWithGoogleController::class, 'store'])->name('auth-google-callback');
 
-Route::get('/connect/facebook/pages/redirect', [FacebookPageChannelController::class, 'create'])->name('connect-facebook-pages-redirect');
-
-Route::get('/connect/facebook/pages/callback', [FacebookPageChannelController::class, 'store'])->name('connect-facebook-pages-callback');
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -46,6 +42,11 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/channels', [ChannelController::class, 'index'])->name('channels');
+
+    Route::get('/connect/facebook/pages/redirect', [FacebookPageChannelController::class, 'create'])->name('connect-facebook-pages-redirect');
+    Route::get('/connect/facebook/pages/callback', [FacebookPageChannelController::class, 'store'])->name('connect-facebook-pages-callback');
+    Route::put('/facebook/page/refresh/connection', [FacebookPageChannelController::class, 'update'])->name('facebook-page-refresh-connection');
+    Route::delete('/facebook/page/destroy', [FacebookPageChannelController::class, 'destroy'])->name('facebook-page-destroy');
 
     Route::get('/publish', function () {
         return Inertia::render('Publish');

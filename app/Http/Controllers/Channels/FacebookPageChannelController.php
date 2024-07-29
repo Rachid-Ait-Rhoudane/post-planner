@@ -35,7 +35,7 @@ class FacebookPageChannelController extends Controller
 
         } catch(Exception $e) {
 
-            return redirect('/channels')->with('error', 'Connecting your Facebook pages faild');
+            return redirect()->route('channels')->dangerBanner('Connecting your Facebook pages faild');
         }
 
         $request->user()->update([
@@ -48,7 +48,7 @@ class FacebookPageChannelController extends Controller
 
         if(! $response->successful()) {
 
-            return redirect('/channels')->with('error', 'Connecting your Facebook pages faild');
+            return redirect()->route('channels')->dangerBanner('Connecting your Facebook pages faild');
         }
 
         $pages = $response->collect()['data'];
@@ -65,6 +65,37 @@ class FacebookPageChannelController extends Controller
             ]);
         }
 
-        return redirect('/channels')->with('message', 'Channel connected successfully');
+        return redirect()->route('channels')->banner('Channel connected successfully');
+    }
+
+    public function update(Request $request) {
+
+        $response = Http::withToken($request->user()->facebook_user_token)->get('https://graph.facebook.com/v20.0/'.$request->input('page_id'), [
+            'fields' => 'name,category,picture,access_token'
+        ]);
+
+        if(! $response->successful()) {
+
+            return redirect()->route('channels')->dangerBanner('Refreshing your Facebook page connection faild');
+        }
+
+        FacebookPage::where('page_id', $request->input('page_id'))
+                    ->update([
+                        'page_id' => $response['id'],
+                        'page_name' => $response['name'],
+                        'page_category' => $response['category'],
+                        'page_profile_picture' => $response['picture']['data']['url'],
+                        'page_access_token' => $response['access_token'],
+                        'user_id' => $request->user()->id
+                    ]);
+
+        return redirect()->route('channels')->banner('Channel connection refreshed successfully');
+    }
+
+    public function destroy(Request $request) {
+
+        FacebookPage::destroy($request->input('id'));
+
+        return redirect()->route('channels')->banner('Channel disconnected successfully');
     }
 }

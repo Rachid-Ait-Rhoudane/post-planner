@@ -1,6 +1,7 @@
 <script setup>
 
 import Dropdown from './Dropdown.vue';
+import { router } from '@inertiajs/vue3';
 import DropdownLink from './DropdownLink.vue';
 
 defineProps({
@@ -9,6 +10,20 @@ defineProps({
         required: true
     }
 });
+
+const refreshConnection = (id) => {
+    router.post('/facebook/page/refresh/connection', {
+        page_id: id,
+        _method: 'PUT'
+    });
+}
+
+const disconnectChannel = (id) => {
+    router.post('/facebook/page/destroy', {
+        id,
+        _method: 'DELETE'
+    });
+}
 
 </script>
 
@@ -35,10 +50,10 @@ defineProps({
                     </button>
                 </template>
                 <template #content>
-                    <DropdownLink href="#">
+                    <DropdownLink @click="refreshConnection(channel.page_id)" as="button" :href="route('facebook-page-refresh-connection')">
                         Refresh Connection
                     </DropdownLink>
-                    <DropdownLink href="#">
+                    <DropdownLink @click="disconnectChannel(channel.id)" as="button" :href="route('facebook-page-destroy')">
                         Disconnect Channel
                     </DropdownLink>
                 </template>
