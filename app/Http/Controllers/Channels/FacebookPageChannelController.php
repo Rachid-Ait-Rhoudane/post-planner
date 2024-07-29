@@ -13,6 +13,13 @@ use Laravel\Socialite\Facades\Socialite;
 class FacebookPageChannelController extends Controller
 {
 
+    protected $facebook;
+
+    public function __construct(Facebook $facebook) {
+
+        $this->facebook = $facebook;
+    }
+
     public function create() {
 
         return Socialite::driver('facebook')
@@ -43,7 +50,7 @@ class FacebookPageChannelController extends Controller
             'facebook_user_token' => $facebookUser->token
         ]);
 
-        $pages = Facebook::pages($request->user()->facebook_user_token);
+        $pages =  $this->facebook->pages($request->user()->facebook_user_token);
 
         if(! $pages) {
             return redirect()->route('channels')->dangerBanner('Connecting your Facebook pages faild');
@@ -66,7 +73,7 @@ class FacebookPageChannelController extends Controller
 
     public function update(Request $request) {
 
-        $page = Facebook::refreshPageConnection($request->input('page_id'));
+        $page =  $this->facebook->refreshPageConnection($request->user()->facebook_user_token, $request->input('page_id'));
 
         if(! $page) {
 
@@ -75,11 +82,11 @@ class FacebookPageChannelController extends Controller
 
         FacebookPage::where('page_id', $request->input('page_id'))
                     ->update([
-                        'page_id' => $response['id'],
-                        'page_name' => $response['name'],
-                        'page_category' => $response['category'],
-                        'page_profile_picture' => $response['picture']['data']['url'],
-                        'page_access_token' => $response['access_token'],
+                        'page_id' => $page['id'],
+                        'page_name' => $page['name'],
+                        'page_category' => $page['category'],
+                        'page_profile_picture' => $page['picture']['data']['url'],
+                        'page_access_token' => $page['access_token'],
                         'user_id' => $request->user()->id
                     ]);
 
