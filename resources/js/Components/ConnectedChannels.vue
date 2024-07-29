@@ -51,10 +51,12 @@ watch(search, (newValue) => {
 
         <div class="divide-y divide-gray-200">
             <ConnectedChannelCard
+                v-if="channels.data.length > 0"
                 v-for="channel in channels.data"
                 :key="channel.id"
                 :channel="channel"
             />
+            <p v-else class="text-gray-500 italic w-fit mx-auto">No data found</p>
         </div>
 
         <Paginator v-if="channels.links >= 2" class="mt-6" :links="channels.links" />
