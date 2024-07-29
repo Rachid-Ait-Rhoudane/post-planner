@@ -62,5 +62,3 @@ const disconnectChannel = (id) => {
     </div>
 
 </template>
-
-<!-- EAAeKu39phGIBO5qNhP45wHZCYFyBd4V27Xq7ywjoZCijul7cyLfVUSZANP8ZBw8VMsLTtzyTpEfcpVem4yJXiExjZAuMvzaXWoqeiW3ejuT3fun75wECvuX1iR6FPVD2EKj1Ep6CkWhQjF6zeEZCkZChoDQGDZANAhcu9aqgTi0daHvU6GSaowhoXYrODzZCZCLMxZA -->
