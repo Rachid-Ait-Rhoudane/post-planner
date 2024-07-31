@@ -2,8 +2,21 @@
 
 import { ref } from 'vue';
 import TextInput from './TextInput.vue';
-import SearchChannelCard from './SearchChannelCard.vue';
+import { router } from '@inertiajs/vue3';
 import FacebookPost from './FacebookPost.vue';
+import PrimaryButton from './PrimaryButton.vue';
+import SearchChannelCard from './SearchChannelCard.vue';
+
+defineProps({
+    posts: {
+        type: Object,
+        required: true
+    },
+    paging: {
+        type: Object,
+        required: true
+    }
+});
 
 let open = ref(false);
 
@@ -16,7 +29,23 @@ const filterDropdown = () => {
     } else {
         arrow.value.classList.add('rotate-180');
     }
-}
+};
+
+const previousPage = (cursor) => {
+    router.get('/publish', {
+        before: cursor
+    }, {
+        preserveScroll: true
+    })
+};
+
+const nextPage = (cursor) => {
+    router.get('/publish', {
+        after: cursor
+    }, {
+        preserveScroll: true
+    })
+};
 
 </script>
 
@@ -25,7 +54,7 @@ const filterDropdown = () => {
     <div class="p-4">
 
         <div class="relative flex justify-between items-center gap-4">
-            <h3 class="text-gray-500" >All About Publish</h3>
+            <h3 class="text-gray-500" >All Published Posts</h3>
             <div class="flex items-center gap-4">
                 <div class="relative">
                     <button @click="filterDropdown" type="button" class="text-gray-500 px-3 py-2 border border-gray-500 rounded-md flex items-center gap-3">
@@ -63,10 +92,20 @@ const filterDropdown = () => {
         </div>
 
         <div class="mt-6 space-y-8">
-            <FacebookPost file="image" />
-            <FacebookPost file="video" />
-            <FacebookPost file="image" />
+            <FacebookPost v-for="post in posts" :key="post.id" :post="post"></FacebookPost>
+            <div class="mt-8 flex items-center justify-between gap-10">
+                <PrimaryButton @click="previousPage(paging.cursors.before)" :disabled="! paging.previous">Previous</PrimaryButton>
+                <PrimaryButton @click="nextPage(paging.cursors.after)" :disabled="! paging.next">Next</PrimaryButton>
+            </div>
         </div>
+
+        <p v-if="false" class="mt-6 flex flex-col items-center gap-2">
+            <span class="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center">
+                <i class="fa-solid fa-ban text-xl text-white"></i>
+            </span>
+            <span class="font-bold">No posts found</span>
+            <span class="text-sm text-gray-500 italic">There are no posts with chosen channels, try changing channels</span>
+        </p>
 
     </div>
 

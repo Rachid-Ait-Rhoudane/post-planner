@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\Auth\AuthWithGoogleController;
-use App\Http\Controllers\Channels\FacebookPageChannelController;
+use App\Http\Controllers\Channels\Facebook\FacebookPageChannelController;
+use App\Http\Controllers\Channels\Facebook\PublishToFacebookPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,8 +49,6 @@ Route::middleware([
     Route::put('/facebook/page/refresh/connection', [FacebookPageChannelController::class, 'update'])->name('facebook-page-refresh-connection');
     Route::delete('/facebook/page/destroy', [FacebookPageChannelController::class, 'destroy'])->name('facebook-page-destroy');
 
-    Route::get('/publish', function () {
-        return Inertia::render('Publish');
-    })->name('publish');
+    Route::get('/publish', [PublishToFacebookPageController::class, 'index'])->name('publish');
 
 });

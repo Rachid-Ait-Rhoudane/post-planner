@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Channels;
+namespace App\Http\Controllers\Channels\Facebook;
 
 use App\Services\Facebook;
 use App\Models\FacebookPage;

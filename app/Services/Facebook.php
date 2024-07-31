@@ -35,10 +35,13 @@ class Facebook {
         return $response;
     }
 
-    public function getPost($page_token, $page_id) {
+    public function posts($page_token, $page_id, $before, $next) {
 
         $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $page_id . '/feed', [
-            'fields' => 'likes,comments,shares,attachments,message,permalink_url'
+            'fields' => 'likes,comments,shares,attachments,message,permalink_url,application,created_time',
+            'limit' => 5,
+            'before' => $before,
+            'after' => $next
         ]);
 
         if(! $response->successful()) {
