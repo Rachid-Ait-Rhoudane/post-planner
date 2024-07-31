@@ -21,8 +21,8 @@ class PublishToFacebookPageController extends Controller
 
     public function index(Request $request) {
 
-        $page = FacebookPage::query()->when($request->query('page_id'), function($query, $page_id) {
-            $query->where('id', $page_id);
+        $page = FacebookPage::query()->when($request->query('pageID'), function($query, $pageID) {
+            $query->where('id', $pageID);
         })->first();
 
         $posts = $this->facebook->posts($page->page_access_token, $page->page_id, $request->query('before') ?? '', $request->query('after') ?? '');
@@ -33,7 +33,11 @@ class PublishToFacebookPageController extends Controller
 
         return Inertia::render('Publish', [
             'posts' => $posts['data'],
-            'paging' => $posts['paging']
+            'paging' => $posts['paging'],
+            'pages' => FacebookPage::query()->when($request->query('search'), function($query, $search) {
+                $query->where('page_name', 'LIKE', '%' . $search . '%');
+            })->get(),
+            'currentPageID' => $page->id
         ]);
     }
 }

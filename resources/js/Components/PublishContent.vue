@@ -1,13 +1,13 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import TextInput from './TextInput.vue';
 import { router } from '@inertiajs/vue3';
 import FacebookPost from './FacebookPost.vue';
 import PrimaryButton from './PrimaryButton.vue';
 import SearchChannelCard from './SearchChannelCard.vue';
 
-defineProps({
+let props = defineProps({
     posts: {
         type: Object,
         required: true
@@ -15,12 +15,21 @@ defineProps({
     paging: {
         type: Object,
         required: true
+    },
+    pages: {
+        type: Object,
+        required: true
+    },
+    currentPageID: {
+        required: true
     }
 });
 
 let open = ref(false);
 
 let arrow = ref(null);
+
+let search = ref('');
 
 const filterDropdown = () => {
     open.value = !open.value;
@@ -30,6 +39,14 @@ const filterDropdown = () => {
         arrow.value.classList.add('rotate-180');
     }
 };
+
+const changePage = (pageID) => {
+    router.get('/publish', {
+        pageID
+    }, {
+        preserveState: true
+    })
+}
 
 const previousPage = (cursor) => {
     router.get('/publish', {
@@ -47,6 +64,16 @@ const nextPage = (cursor) => {
     })
 };
 
+watch(search, (newValue) => {
+    router.get('/publish', {
+        pageID: props.currentPageID,
+        search: newValue
+    }, {
+        preserveState: true,
+        only: ['pages']
+    })
+});
+
 </script>
 
 <template>
@@ -54,10 +81,10 @@ const nextPage = (cursor) => {
     <div class="p-4">
 
         <div class="relative flex justify-between items-center gap-4">
-            <h3 class="text-gray-500" >All Published Posts</h3>
+            <h3 class="text-gray-500 text-sm sm:text-base" >All Published Posts</h3>
             <div class="flex items-center gap-4">
                 <div class="relative">
-                    <button @click="filterDropdown" type="button" class="text-gray-500 px-3 py-2 border border-gray-500 rounded-md flex items-center gap-3">
+                    <button @click="filterDropdown" type="button" class="text-gray-500 px-3 py-2 border border-gray-500 rounded-md flex items-center gap-3 text-sm sm:text-base">
                         <span>Channels</span>
                         <i ref="arrow" class="fa-solid fa-angle-down duration-300"></i>
                     </button>
@@ -69,22 +96,17 @@ const nextPage = (cursor) => {
                         leave-from-class="transform opacity-100 scale-100"
                         leave-to-class="transform opacity-0 scale-95"
                     >
-                        <div v-show="open" class="absolute z-50 rounded-md bg-white border border-gray-100 shadow-md py-2 px-1 w-72 top-12 right-0">
-                            <div class="w-full">
-                                <TextInput class="h-7 w-full" placeholder="Search for channel"/>
+                        <div v-show="open" class="absolute z-50 rounded-md bg-white border border-gray-100 shadow-md py-2 w-72 top-12 -right-10">
+                            <div class="mx-1">
+                                <TextInput v-model="search" class="h-7 w-full" placeholder="Search for channel"/>
                             </div>
-                            <div class="w-full mt-2 h-36 overflow-auto">
-                                <SearchChannelCard />
-                                <SearchChannelCard />
-                                <SearchChannelCard />
-                                <SearchChannelCard />
-                                <SearchChannelCard />
-                                <SearchChannelCard />
+                            <div class="w-full mt-2 max-h-36 overflow-auto">
+                                <SearchChannelCard @click="changePage(page.id)" v-for="page in pages" :key="page.id" :page="page" :active="page.id == currentPageID" />
                             </div>
                         </div>
                     </transition>
                 </div>
-                <button class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600" type="button">
+                <button class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600 text-sm sm:text-base" type="button">
                     <i class="fa-solid fa-plus"></i>
                     <span>New Post</span>
                 </button>
