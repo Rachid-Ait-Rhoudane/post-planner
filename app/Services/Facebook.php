@@ -34,4 +34,18 @@ class Facebook {
 
         return $response;
     }
+
+    public function getPost($page_token, $page_id) {
+
+        $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $page_id . '/feed', [
+            'fields' => 'likes,comments,shares,attachments,message,permalink_url'
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
 }
