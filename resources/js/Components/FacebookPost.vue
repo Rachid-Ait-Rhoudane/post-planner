@@ -27,7 +27,7 @@ const postMessage = computed(() => {
             </span>
         </div>
         <div class="bg-gray-100 p-2 flex flex-col-reverse sm:flex-row gap-5">
-            <p class="text-sm" v-html="postMessage ?? ''"></p>
+            <p class="text-sm flex-1" v-html="postMessage ?? ''"></p>
             <img v-if="photoTypes.includes(post.attachments?.data[0].type)" class="w-52 aspect-square" :src="post.attachments?.data[0].media.image.src" alt="post image">
             <video v-else-if="post.attachments?.data[0].type == 'video_inline'" class="w-56 aspect-video self-center"  controls>
                 <source :src="post.attachments?.data[0].media.source" type="video/mp4">
