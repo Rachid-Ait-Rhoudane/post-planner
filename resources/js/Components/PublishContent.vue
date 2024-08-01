@@ -2,9 +2,12 @@
 
 import { ref, watch } from 'vue';
 import TextInput from './TextInput.vue';
+import FileInput from './FileInput.vue';
 import { router } from '@inertiajs/vue3';
+import DialogModal from './DialogModal.vue';
 import FacebookPost from './FacebookPost.vue';
 import PrimaryButton from './PrimaryButton.vue';
+import TextAreaInput from './TextAreaInput.vue';
 import SearchChannelCard from './SearchChannelCard.vue';
 
 let props = defineProps({
@@ -30,6 +33,8 @@ let open = ref(false);
 let arrow = ref(null);
 
 let search = ref('');
+
+let show = ref(false);
 
 const filterDropdown = () => {
     open.value = !open.value;
@@ -106,10 +111,24 @@ watch(search, (newValue) => {
                         </div>
                     </transition>
                 </div>
-                <button class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600 text-sm sm:text-base" type="button">
+                <button @click="show = true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600 text-sm sm:text-base" type="button">
                     <i class="fa-solid fa-plus"></i>
                     <span>New Post</span>
                 </button>
+                <DialogModal :show="show">
+                    <template #title>
+                        Create new post
+                    </template>
+                    <template #content>
+                        <form>
+                            <TextAreaInput placeholder="Write a description" rows="10"></TextAreaInput>
+                            <FileInput />
+                        </form>
+                    </template>
+                    <template #footer>
+                        <PrimaryButton @click="show = false">Cancel</PrimaryButton>
+                    </template>
+                </DialogModal>
             </div>
         </div>
 
