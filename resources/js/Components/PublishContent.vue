@@ -4,6 +4,7 @@ import { ref, watch } from 'vue';
 import TextInput from './TextInput.vue';
 import FileInput from './FileInput.vue';
 import { router } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import DialogModal from './DialogModal.vue';
 import FacebookPost from './FacebookPost.vue';
 import PrimaryButton from './PrimaryButton.vue';
@@ -79,6 +80,15 @@ watch(search, (newValue) => {
     })
 });
 
+const form = useForm({
+  description: null,
+  file: null,
+});
+
+const send = () => {
+    console.log(form.description);
+    console.log(form.file.name);
+}
 </script>
 
 <template>
@@ -120,13 +130,14 @@ watch(search, (newValue) => {
                         Create new post
                     </template>
                     <template #content>
-                        <form>
-                            <TextAreaInput placeholder="Write a description" rows="10"></TextAreaInput>
-                            <FileInput />
+                        <form @submit.prevent="send">
+                            <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
+                            <FileInput v-model="form.file"  />
                         </form>
                     </template>
                     <template #footer>
                         <PrimaryButton @click="show = false">Cancel</PrimaryButton>
+                        <PrimaryButton>Create</PrimaryButton>
                     </template>
                 </DialogModal>
             </div>
