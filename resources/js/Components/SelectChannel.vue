@@ -1,0 +1,60 @@
+<script setup>
+
+import { ref } from 'vue';
+import TextInput from './TextInput.vue';
+import SearchChannelCard from './SearchChannelCard.vue';
+
+defineProps({
+    channels: {
+        type: Object,
+        required: true
+    },
+    currentChannelID: {
+        required: true
+    }
+});
+
+defineEmits(['update:modelValue', 'changeChannel']);
+
+let open = ref(false);
+
+let arrow = ref(null);
+
+const filterDropdown = () => {
+    open.value = !open.value;
+    if(arrow.value.classList.contains('rotate-180')) {
+        arrow.value.classList.remove('rotate-180');
+    } else {
+        arrow.value.classList.add('rotate-180');
+    }
+};
+
+</script>
+
+<template>
+
+    <div class="relative">
+        <button @click="filterDropdown" type="button" class="text-gray-500 px-3 py-2 border border-gray-500 rounded-md flex items-center justify-between gap-3 text-sm sm:text-base w-full">
+            <span>Channels</span>
+            <i ref="arrow" class="fa-solid fa-angle-down duration-300"></i>
+        </button>
+        <transition
+            enter-active-class="transition ease-out duration-200"
+            enter-from-class="transform opacity-0 scale-95"
+            enter-to-class="transform opacity-100 scale-100"
+            leave-active-class="transition ease-in duration-75"
+            leave-from-class="transform opacity-100 scale-100"
+            leave-to-class="transform opacity-0 scale-95"
+        >
+            <div v-show="open" class="absolute z-50 rounded-md bg-white border border-gray-100 shadow-md py-2 min-w-72 w-full top-12 left-0">
+                <div class="mx-1">
+                    <TextInput @input="$emit('update:modelValue', $event.target.value)" class="h-7 w-full" placeholder="Search for channel"/>
+                </div>
+                <div class="w-full mt-2 max-h-36 overflow-auto">
+                    <SearchChannelCard @click="$emit('changeChannel', channel.id)" v-for="channel in channels" :key="channel.id" :channel="channel" :active="channel.id == currentChannelID" />
+                </div>
+            </div>
+        </transition>
+    </div>
+
+</template>
