@@ -1,20 +1,20 @@
 <script setup>
 
-import { ref } from 'vue';
+import axios from 'axios';
 import TextInput from './TextInput.vue';
+import { ref, onMounted, watch } from 'vue';
+import SpinnerLoader from './SpinnerLoader.vue';
 import SearchChannelCard from './SearchChannelCard.vue';
 
 defineProps({
-    channels: {
-        type: Object,
-        required: true
-    },
     currentChannelID: {
         required: true
     }
 });
 
-defineEmits(['update:modelValue', 'changeChannel']);
+defineEmits(['changeChannel']);
+
+let channels = ref(null);
 
 let open = ref(false);
 
@@ -28,6 +28,22 @@ const filterDropdown = () => {
         arrow.value.classList.add('rotate-180');
     }
 };
+
+onMounted(async () => {
+    let results = await axios.get('/api/channels');
+    channels.value = await results.data.data;
+});
+
+let search = ref('');
+
+watch(search, async (newValue) => {
+    let results = await axios.get('/api/channels', {
+        params: {
+            search: newValue
+        }
+    });
+    channels.value = await results.data.data;
+});
 
 </script>
 
@@ -48,10 +64,11 @@ const filterDropdown = () => {
         >
             <div v-show="open" class="absolute z-50 rounded-md bg-white border border-gray-100 shadow-md py-2 min-w-72 w-full top-12 right-0">
                 <div class="mx-1">
-                    <TextInput @input="$emit('update:modelValue', $event.target.value)" class="h-7 w-full" placeholder="Search for channel"/>
+                    <TextInput v-model="search" class="h-7 w-full" placeholder="Search for channel"/>
                 </div>
                 <div class="w-full mt-2 max-h-36 overflow-auto">
-                    <SearchChannelCard @click="$emit('changeChannel', channel.id)" v-for="channel in channels" :key="channel.id" :channel="channel" :active="channel.id == currentChannelID" />
+                    <SearchChannelCard v-if="channels" @click="$emit('changeChannel', channel.id)" v-for="channel in channels" :key="channel.id" :channel="channel" :active="channel.id == currentChannelID" />
+                    <SpinnerLoader v-else />
                 </div>
             </div>
         </transition>

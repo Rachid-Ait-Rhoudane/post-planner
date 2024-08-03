@@ -28,8 +28,6 @@ let props = defineProps({
 
 let show = ref(false);
 
-let search = ref('');
-
 const changePage = (pageID) => {
     router.get('/publish', {
         pageID
@@ -53,16 +51,6 @@ const nextPage = (cursor) => {
         preserveScroll: true
     })
 };
-
-watch(search, (newValue) => {
-    router.get('/publish', {
-        pageID: props.currentPageID,
-        search: newValue
-    }, {
-        preserveState: true,
-        only: ['pages']
-    })
-});
 </script>
 
 <template>
@@ -72,7 +60,7 @@ watch(search, (newValue) => {
         <div class="relative flex justify-between items-center gap-4">
             <h3 class="text-gray-500 text-sm sm:text-base" >All Published Posts</h3>
             <div class="flex items-center gap-4">
-                <SelectChannel :channels="pages" v-model="search" @changeChannel="changePage" :currentChannelID="currentPageID" />
+                <SelectChannel @changeChannel="changePage" :currentChannelID="currentPageID" />
                 <button @click="show = true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600 text-sm sm:text-base" type="button">
                     <i class="fa-solid fa-plus"></i>
                     <span>New Post</span>

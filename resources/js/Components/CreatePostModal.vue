@@ -56,10 +56,10 @@ const form = useForm({
         </div>
         <form>
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
+                <SelectChannel :channels="pages" @changeChannel="(id) => currentChannelID = id" :currentChannelID="currentChannelID" />
                 <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                 <FileInput v-model="form.file"  />
                 <TextInput v-if="form.file" placeholder="file title" class="w-full" />
-                <SelectChannel :channels="pages" @changeChannel="(id) => currentChannelID = id" :currentChannelID="currentChannelID" />
             </div>
 
             <div class="flex flex-row justify-end items-center gap-2 px-6 py-4 bg-gray-100 text-right">
