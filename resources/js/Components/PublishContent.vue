@@ -31,8 +31,6 @@ let show = ref(false);
 const changePage = (pageID) => {
     router.get('/publish', {
         pageID
-    }, {
-        preserveState: true
     })
 }
 
@@ -65,7 +63,7 @@ const nextPage = (cursor) => {
                     <i class="fa-solid fa-plus"></i>
                     <span>New Post</span>
                 </button>
-                <CreatePostModal :show="show" @close="show = false" :pages="pages" />
+                <CreatePostModal :show="show" @close="show = false" :pages="pages" :currentChannelID="currentPageID" />
             </div>
         </div>
 

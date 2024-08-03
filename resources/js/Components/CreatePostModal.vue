@@ -27,18 +27,21 @@ let props = defineProps({
     pages: {
         type: Object,
         required: true
+    },
+    currentChannelID: {
+        required: true
     }
 });
-
-let currentChannelID = ref(props.pages[0].id);
 
 const close = () => {
     emit('close');
 };
 
 const form = useForm({
-  description: null,
-  file: null,
+    currentChannelID: props.currentChannelID,
+    description: null,
+    file: null,
+    fileTitle: null
 });
 
 </script>
@@ -54,17 +57,17 @@ const form = useForm({
         <div class="px-6 pt-4 text-lg font-medium text-gray-900">
             Create new post
         </div>
-        <form>
+        <form @submit.prevent="form.post('/publish/post')">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
-                <SelectChannel :channels="pages" @changeChannel="(id) => currentChannelID = id" :currentChannelID="currentChannelID" />
+                <SelectChannel :channels="pages" @changeChannel="(id) => form.currentChannelID = id" :currentChannelID="form.currentChannelID" />
                 <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                 <FileInput v-model="form.file"  />
-                <TextInput v-if="form.file" placeholder="file title" class="w-full" />
+                <TextInput v-if="form.file" v-model="form.fileTitle" placeholder="file title" class="w-full" />
             </div>
 
             <div class="flex flex-row justify-end items-center gap-2 px-6 py-4 bg-gray-100 text-right">
                 <PrimaryButton type="button" @click="close">Cancel</PrimaryButton>
-                <PrimaryButton type="submit" >Create</PrimaryButton>
+                <PrimaryButton type="submit" :disabled="form.processing" >Create</PrimaryButton>
             </div>
         </form>
     </Modal>

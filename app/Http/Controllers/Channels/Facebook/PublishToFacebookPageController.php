@@ -40,4 +40,10 @@ class PublishToFacebookPageController extends Controller
             'currentPageID' => $page->id
         ]);
     }
+
+    public function store(Request $request) {
+
+        Log::alert($request->file('file')->path());
+        // $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token);
+    }
 }

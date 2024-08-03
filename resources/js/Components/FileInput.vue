@@ -4,12 +4,20 @@ import { ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 
-let fileName = ref('choose a file')
+let fileName = ref('choose a file');
+
+let file = ref(null);
 
 const uploadFile = (e) => {
-    let file = e.target.files[0];
-    fileName.value = file ? file.name : 'choose a file';
-    emit('update:modelValue', file);
+    file.value = e.target.files[0];
+    fileName.value = file.value ? file.value.name : 'choose a file';
+    emit('update:modelValue', file.value);
+}
+
+const cancelUpload = () => {
+    file.value = null;
+    fileName.value = 'choose a file';
+    emit('update:modelValue', file.value);
 }
 
 </script>
@@ -26,6 +34,9 @@ const uploadFile = (e) => {
             </span>
             <span class="block mt-2 text-sm">{{ fileName }}</span>
         </div>
+        <button v-if="file" @click="cancelUpload" type="button" class="absolute top-2 right-2 z-20">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
     </div>
 
 </template>

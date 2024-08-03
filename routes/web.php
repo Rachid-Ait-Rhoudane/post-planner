@@ -50,5 +50,5 @@ Route::middleware([
     Route::delete('/facebook/page/destroy', [FacebookPageChannelController::class, 'destroy'])->name('facebook-page-destroy');
 
     Route::get('/publish', [PublishToFacebookPageController::class, 'index'])->name('publish');
-
+    Route::post('/publish/post', [PublishToFacebookPageController::class, 'store'])->name('publish-post');
 });

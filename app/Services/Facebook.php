@@ -51,4 +51,42 @@ class Facebook {
 
         return $response;
     }
+
+    public function startUploadSession($facebook_user_token, $fileName, $fileLength, $fileType) {
+
+        $response = Http::withToken($facebook_user_token)->post('https://graph.facebook.com/v20.0/2122862738113634/uploads', [
+            'filename' => $fileName,
+            'file_length' => $fileLength,
+            'file_type' => $fileType
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response['id'];
+    }
+
+    public function startUpload($facebook_user_token, $sessionID, $fileOffset = 0, $file) {
+
+        $response = Http::withHeaders([
+            'file_offset' => $fileOffset,
+            'Authorization' => 'OAuth ' . $facebook_user_token
+        ])
+        ->attach('file', fopen($file, 'r'))
+        ->post('https://graph.facebook.com/v20.0/' . $sessionID);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response['h'];
+    }
+
+    public function publishVideo() {
+
+
+    }
 }

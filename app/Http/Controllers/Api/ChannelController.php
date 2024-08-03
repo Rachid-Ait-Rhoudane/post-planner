@@ -17,7 +17,6 @@ class ChannelController extends Controller
      */
     public function index(Request $request)
     {
-        Log::alert($request->input('search'));
         $channels = FacebookPage::query()
                                 ->when($request->query('search'), function ($query, $search) {
                                     $query->where('page_name', 'LIKE', '%' . $search . '%');
