@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Modal from './Modal.vue';
 import TextInput from './TextInput.vue';
 import FileInput from './FileInput.vue';
@@ -40,6 +40,10 @@ const form = useForm({
     fileTitle: null
 });
 
+watch(() => form.file, (file) => {
+    console.log(file ? file.name : 'null');
+})
+
 </script>
 
 <template>
@@ -55,9 +59,9 @@ const form = useForm({
         </div>
         <form @submit.prevent="form.post('/publish/post')">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
-                <SelectChannel :channels="pages" @changeChannel="(id) => form.currentChannelID = id" :currentChannelID="form.currentChannelID" />
+                <SelectChannel @changeChannel="(id) => form.currentChannelID = id" :currentChannelID="form.currentChannelID" />
                 <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
-                <FileInput v-model="form.file"  />
+                <FileInput v-model="form.file" />
                 <TextInput v-if="form.file" v-model="form.fileTitle" placeholder="file title" class="w-full" />
             </div>
 

@@ -14,7 +14,7 @@ defineProps({
 
 defineEmits(['changeChannel']);
 
-let channels = ref(null);
+let channels = ref([]);
 
 let open = ref(false);
 
@@ -67,7 +67,7 @@ watch(search, async (newValue) => {
                     <TextInput v-model="search" class="h-7 w-full" placeholder="Search for channel"/>
                 </div>
                 <div class="w-full mt-2 max-h-36 overflow-auto">
-                    <SearchChannelCard v-if="channels" @click="$emit('changeChannel', channel.id)" v-for="channel in channels" :key="channel.id" :channel="channel" :active="channel.id == currentChannelID" />
+                    <SearchChannelCard v-if="channels.length > 0" @click="$emit('changeChannel', channel.id)" v-for="channel in channels" :key="channel.id" :channel="channel" :active="channel.id == currentChannelID" />
                     <SpinnerLoader v-else />
                 </div>
             </div>
