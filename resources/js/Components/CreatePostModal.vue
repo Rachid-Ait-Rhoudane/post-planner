@@ -24,10 +24,6 @@ let props = defineProps({
         type: Boolean,
         default: true,
     },
-    pages: {
-        type: Object,
-        required: true
-    },
     currentChannelID: {
         required: true
     }

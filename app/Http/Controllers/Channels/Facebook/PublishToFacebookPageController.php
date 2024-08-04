@@ -34,9 +34,6 @@ class PublishToFacebookPageController extends Controller
         return Inertia::render('Publish', [
             'posts' => $posts['data'],
             'paging' => $posts['paging'],
-            'pages' => FacebookPage::query()->when($request->query('search'), function($query, $search) {
-                $query->where('page_name', 'LIKE', '%' . $search . '%');
-            })->get(),
             'currentPageID' => $page->id
         ]);
     }

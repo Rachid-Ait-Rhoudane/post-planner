@@ -14,11 +14,11 @@ const uploadFile = (e) => {
     emit('update:modelValue', file.value);
 }
 
-const cancelUpload = () => {
-    file.value = null;
-    fileName.value = 'choose a file';
-    emit('update:modelValue', file.value);
-}
+// const cancelUpload = () => {
+//     file.value = null;
+//     fileName.value = 'choose a file';
+//     emit('update:modelValue', file.value);
+// }
 
 </script>
 
@@ -34,9 +34,9 @@ const cancelUpload = () => {
             </span>
             <span class="block mt-2 text-sm">{{ fileName }}</span>
         </div>
-        <button v-if="file" @click="cancelUpload" type="button" class="absolute top-2 right-2 z-20">
+        <!-- <button v-if="file" @click="cancelUpload" type="button" class="absolute top-2 right-2 z-20">
             <i class="fa-solid fa-xmark"></i>
-        </button>
+        </button> -->
     </div>
 
 </template>

@@ -62,7 +62,7 @@ watch(search, async (newValue) => {
             leave-from-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95"
         >
-            <div v-show="open" class="absolute z-50 rounded-md bg-white border border-gray-100 shadow-md py-2 min-w-72 w-full top-12 right-0">
+            <div v-show="open" class="absolute z-50 rounded-md bg-white border border-gray-100 shadow-md py-2 min-w-64 w-full top-12 right-0">
                 <div class="mx-1">
                     <TextInput v-model="search" class="h-7 w-full" placeholder="Search for channel"/>
                 </div>

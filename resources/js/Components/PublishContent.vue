@@ -16,10 +16,6 @@ let props = defineProps({
         type: Object,
         required: true
     },
-    pages: {
-        type: Object,
-        required: true
-    },
     currentPageID: {
         required: true
     }
@@ -63,7 +59,7 @@ const nextPage = (cursor) => {
                     <i class="fa-solid fa-plus"></i>
                     <span>New Post</span>
                 </button>
-                <CreatePostModal :show="show" @close="show = false" :pages="pages" :currentChannelID="currentPageID" />
+                <CreatePostModal :show="show" @close="show = false" :currentChannelID="currentPageID" />
             </div>
         </div>
 
