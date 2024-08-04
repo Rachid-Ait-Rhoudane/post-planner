@@ -34,7 +34,7 @@ const close = () => {
 };
 
 const form = useForm({
-    currentChannelID: props.currentChannelID,
+    channelID: props.currentChannelID,
     description: null,
     file: null,
     fileTitle: null
@@ -55,13 +55,13 @@ const form = useForm({
         </div>
         <form @submit.prevent="form.post('/publish/post')">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
-                <SelectChannel @changeChannel="(id) => form.currentChannelID = id" :currentChannelID="form.currentChannelID" />
+                <SelectChannel @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
                 <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                 <FileInput v-model="form.file" />
                 <TextInput v-if="form.file" v-model="form.fileTitle" placeholder="file title" class="w-full" />
             </div>
 
-            <div class="flex flex-row justify-end items-center gap-2 px-6 py-4 bg-gray-100 text-right">
+            <div class="flex flex-row justify-end items-center gap-2 px-6 py-4 bg-gray-100 text-right rounded-b-md">
                 <PrimaryButton type="button" @click="close">Cancel</PrimaryButton>
                 <PrimaryButton type="submit" :disabled="form.processing" >Create</PrimaryButton>
             </div>

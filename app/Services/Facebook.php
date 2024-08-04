@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class Facebook {
 
@@ -55,7 +56,7 @@ class Facebook {
     public function startUploadSession($facebook_user_token, $fileName, $fileLength, $fileType) {
 
         $response = Http::withToken($facebook_user_token)->post('https://graph.facebook.com/v20.0/2122862738113634/uploads', [
-            'filename' => $fileName,
+            'file_name' => $fileName,
             'file_length' => $fileLength,
             'file_type' => $fileType
         ]);
@@ -74,7 +75,7 @@ class Facebook {
             'file_offset' => $fileOffset,
             'Authorization' => 'OAuth ' . $facebook_user_token
         ])
-        ->attach('file', fopen($file, 'r'))
+        ->attach('attachment', $file)
         ->post('https://graph.facebook.com/v20.0/' . $sessionID);
 
         if(! $response->successful()) {
@@ -85,8 +86,19 @@ class Facebook {
         return $response['h'];
     }
 
-    public function publishVideo() {
+    public function publishVideo($facebook_page_token, $page_id, $title, $description, $uploadFileHandle) {
 
+        $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/videos', [
+            'title' => $title,
+            'description' => $description,
+            'fbuploader_video_file_chunk' => $uploadFileHandle
+        ]);
 
+        // if(! $response->successful()) {
+
+        //     return false;
+        // }
+
+        return $response;
     }
 }

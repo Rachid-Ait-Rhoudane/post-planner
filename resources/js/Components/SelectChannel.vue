@@ -50,7 +50,12 @@ watch(search, async (newValue) => {
 <template>
 
     <div class="relative">
-        <button @click="filterDropdown" type="button" class="text-gray-500 px-3 py-2 border border-gray-500 rounded-md flex items-center justify-between gap-3 text-sm sm:text-base w-full">
+        <button
+            @click="filterDropdown"
+            type="button"
+            class="text-gray-500 px-3 py-2 border rounded-md flex items-center justify-between gap-3 text-sm sm:text-base w-full"
+            :class="{'border-indigo-500 text-indigo-500' : open, 'border-gray-500': !open}"
+        >
             <span>Channels</span>
             <i ref="arrow" class="fa-solid fa-angle-down duration-300"></i>
         </button>

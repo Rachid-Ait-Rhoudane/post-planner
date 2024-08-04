@@ -8,6 +8,7 @@ use App\Models\FacebookPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PublishToFacebookPageController extends Controller
 {
@@ -40,7 +41,21 @@ class PublishToFacebookPageController extends Controller
 
     public function store(Request $request) {
 
-        Log::alert($request->file('file')->path());
-        // $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token);
+        $filePath = Storage::disk('public')->put('/files', $request->file('file'));
+        $fileName = explode('/', $filePath)[1];
+        $fileLength = Storage::disk('public')->size($filePath);
+        $fileType = Storage::disk('public')->mimeType($filePath);
+
+        $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
+        Log::alert($uploadSessionID);
+
+        $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath));
+        Log::alert($uploadFileHandle);
+
+        $page = FacebookPage::findOrFail($request->input('channelID'));
+
+        $videoPostID = $this->facebook->publishVideo($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+
+        Log::alert($videoPostID);
     }
 }
