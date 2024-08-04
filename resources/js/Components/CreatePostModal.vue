@@ -40,10 +40,6 @@ const form = useForm({
     fileTitle: null
 });
 
-watch(() => form.file, (file) => {
-    console.log(file ? file.name : 'null');
-})
-
 </script>
 
 <template>
