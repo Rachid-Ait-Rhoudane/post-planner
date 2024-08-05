@@ -69,13 +69,13 @@ class Facebook {
         return $response['id'];
     }
 
-    public function startUpload($facebook_user_token, $sessionID, $fileOffset = 0, $file) {
+    public function startUpload($facebook_user_token, $sessionID, $fileOffset = 0, $file, $fileName) {
 
         $response = Http::withHeaders([
             'file_offset' => $fileOffset,
             'Authorization' => 'OAuth ' . $facebook_user_token
         ])
-        ->attach('attachment', $file)
+        ->withBody($file, $fileName)
         ->post('https://graph.facebook.com/v20.0/' . $sessionID);
 
         if(! $response->successful()) {
@@ -86,6 +86,36 @@ class Facebook {
         return $response['h'];
     }
 
+    public function publishText($facebook_page_token, $page_id, $text) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/feed', [
+            'message' => $text,
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function publishPhoto($facebook_page_token, $page_id, $title, $description, $uploadFileHandle) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/photos', [
+            'title' => $title,
+            'message' => $description,
+            'fbuploader_video_file_chunk' => $uploadFileHandle
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
     public function publishVideo($facebook_page_token, $page_id, $title, $description, $uploadFileHandle) {
 
         $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/videos', [
@@ -94,10 +124,10 @@ class Facebook {
             'fbuploader_video_file_chunk' => $uploadFileHandle
         ]);
 
-        // if(! $response->successful()) {
+        if(! $response->successful()) {
 
-        //     return false;
-        // }
+            return false;
+        }
 
         return $response;
     }

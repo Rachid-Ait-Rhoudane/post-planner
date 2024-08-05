@@ -41,20 +41,23 @@ class PublishToFacebookPageController extends Controller
 
     public function store(Request $request) {
 
-        $filePath = Storage::disk('public')->put('/files', $request->file('file'));
-        $fileName = explode('/', $filePath)[1];
-        $fileLength = Storage::disk('public')->size($filePath);
-        $fileType = Storage::disk('public')->mimeType($filePath);
+        // $file = $request->file('file');
+        // $filePath = Storage::disk('public')->put('/files', $file);
+        // $fileName = $file->getClientOriginalName();
+        // $fileLength = Storage::disk('public')->size($filePath);
+        // $fileType = Storage::disk('public')->mimeType($filePath);
 
-        $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
-        Log::alert($uploadSessionID);
+        // $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
 
-        $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath));
-        Log::alert($uploadFileHandle);
+        // $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath), $fileName);
 
         $page = FacebookPage::findOrFail($request->input('channelID'));
 
-        $videoPostID = $this->facebook->publishVideo($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+        // $videoPostID = $this->facebook->publishPhoto($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+
+        // Log::alert($videoPostID);
+
+        $videoPostID = $this->facebook->publishText($page->page_access_token, $page->page_id, $request->input('description'));
 
         Log::alert($videoPostID);
     }
