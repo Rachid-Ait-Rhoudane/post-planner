@@ -41,24 +41,37 @@ class PublishToFacebookPageController extends Controller
 
     public function store(Request $request) {
 
-        // $file = $request->file('file');
-        // $filePath = Storage::disk('public')->put('/files', $file);
-        // $fileName = $file->getClientOriginalName();
-        // $fileLength = Storage::disk('public')->size($filePath);
-        // $fileType = Storage::disk('public')->mimeType($filePath);
-
-        // $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
-
-        // $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath), $fileName);
-
         $page = FacebookPage::findOrFail($request->input('channelID'));
 
-        // $videoPostID = $this->facebook->publishPhoto($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+        // if($request->hasFile('file')) {
 
-        // Log::alert($videoPostID);
+        //     $request->validate([
+        //         'file' => ['mimetypes:application/pdf,image/jpeg,image/jpg,image/png,video/mp4']
+        //     ]);
 
-        $videoPostID = $this->facebook->publishText($page->page_access_token, $page->page_id, $request->input('description'));
+        //     $file = $request->file('file');
+        //     $filePath = Storage::disk('public')->put('/files', $file);
+        //     $fileName = $file->getClientOriginalName();
+        //     $fileLength = Storage::disk('public')->size($filePath);
+        //     $fileType = Storage::disk('public')->mimeType($filePath);
 
-        Log::alert($videoPostID);
+        //     $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
+
+        //     $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath), $fileName);
+
+        //     if(explode('/', $fileType)[0] === 'image') {
+        //         $photoPostID = $this->facebook->publishPhoto($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+        //         return redirect()->route('publish')->banner('photo published successfully');
+        //     }
+
+        //     if(explode('/', $fileType)[0] === 'video') {
+        //         $videoPostID = $this->facebook->publishVideo($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+        //         Log::alert($videoPostID);
+        //         return redirect()->route('publish')->banner('video published successfully');
+        //     }
+        // }
+
+        // $postID = $this->facebook->publishText($page->page_access_token, $page->page_id, $request->input('description'));
+        return redirect()->route('publish')->banner('post published successfully');
     }
 }

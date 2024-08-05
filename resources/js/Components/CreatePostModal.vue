@@ -40,6 +40,15 @@ const form = useForm({
     fileTitle: null
 });
 
+const sendData = async () => {
+    form.post('/publish/post', {
+        onSuccess: (page) => {
+            form.reset();
+            emit('close');
+        }
+    });
+}
+
 </script>
 
 <template>
@@ -53,11 +62,14 @@ const form = useForm({
         <div class="px-6 pt-4 text-lg font-medium text-gray-900">
             Create new post
         </div>
-        <form @submit.prevent="form.post('/publish/post')">
+        <form @submit.prevent="sendData">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
                 <SelectChannel @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
                 <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
-                <FileInput v-model="form.file" />
+                <div class="space-y-1">
+                    <FileInput v-model="form.file" />
+                    <span class="block text-xs text-red-500" v-if="form.errors.file">{{ form.errors.file }}</span>
+                </div>
                 <TextInput v-if="form.file" v-model="form.fileTitle" placeholder="file title" class="w-full" />
             </div>
 
