@@ -23,6 +23,7 @@ class PublishToFacebookPageController extends Controller
 
     public function index(Request $request) {
 
+        Log::alert($request->query('pageID'));
         $page = FacebookPage::query()->when($request->query('pageID'), function($query, $pageID) {
             $query->where('id', $pageID);
         })->first();
@@ -56,9 +57,16 @@ class PublishToFacebookPageController extends Controller
             if(explode('/', $fileType)[0] === 'image') {
                 $photoPostID = $this->facebook->publishPhoto($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
                 FacebookPost::create([
-
+                    'post_id' => $photoPostID['id'],
+                    'title' => $request->input('fileTitle'),
+                    'description' => $request->input('description'),
+                    'file_type' => 'image',
+                    'file_url' => Storage::disk('public')->url($filePath),
+                    'facebook_page_id' => $page->id
                 ]);
-                return redirect()->route('publish')->banner('photo published successfully');
+                return redirect()->route('publish', [
+                    'pageID' => $page->id
+                ])->banner('photo published successfully');
             }
 
             if(explode('/', $fileType)[0] === 'video') {
@@ -71,11 +79,20 @@ class PublishToFacebookPageController extends Controller
                     'file_url' => Storage::disk('public')->url($filePath),
                     'facebook_page_id' => $page->id
                 ]);
-                return redirect()->route('publish')->banner('video published successfully');
+                return redirect()->route('publish', [
+                    'pageID' => $page->id
+                ])->banner('video published successfully');
             }
         }
 
         $postID = $this->facebook->publishText($page->page_access_token, $page->page_id, $request->input('description'));
-        return redirect()->route('publish')->banner('post published successfully');
+        FacebookPost::create([
+            'post_id' => $postID['id'],
+            'description' => $request->input('description'),
+            'facebook_page_id' => $page->id
+        ]);
+        return redirect()->route('publish', [
+            'pageID' => $page->id
+        ])->banner('post published successfully');
     }
 }
