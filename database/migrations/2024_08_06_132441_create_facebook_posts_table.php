@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('post_id');
             $table->string('title')->nullable();
             $table->string('description');
-            $table->string('file')->nullable();
+            $table->string('file_url')->nullable();
+            $table->string('file_type')->nullable();
             $table->string('likes')->nullable();
             $table->string('comments')->nullable();
             $table->string('shares')->nullable();

@@ -7,11 +7,7 @@ defineProps({
         type: Object,
         required: true
     },
-    paging: {
-        type: Object,
-        required: true
-    },
-    currentPageID: {
+    currentChannelID: {
         required: true
     }
 });
@@ -23,7 +19,7 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white shadow-xl sm:rounded-lg">
-                    <PublishContent :posts="posts" :paging="paging" :currentPageID="currentPageID" />
+                    <PublishContent :posts="posts" :currentChannelID="currentChannelID" />
                 </div>
             </div>
         </div>
