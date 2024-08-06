@@ -22,7 +22,7 @@ const postMessage = computed(() => {
     <div class="rounded-md shadow-md border border-gray-200">
         <div class="p-2 text-gray-500">
             <span class="flex items-center gap-2">
-                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-facebook text-blue-500"></i>
                 <span class="text-xs">Shared via {{ post.application?.name ?? 'Facebook' }} on {{ new Date(post.created_time) }}</span>
             </span>
         </div>
@@ -60,7 +60,7 @@ const postMessage = computed(() => {
             </div>
             <a class="text-gray-500 flex items-center gap-2 hover:text-gray-600" target="_blank" :href="post.permalink_url">
                 <span class="text-xs font-bold">View Post</span>
-                <i class="fa-solid fa-eye text-xl"></i>
+                <i class="fa-solid fa-eye"></i>
             </a>
         </div>
     </div>
