@@ -90,7 +90,7 @@ const showAnalytics = async (id) => {
         <template #content>
             <div v-if="! loading" class="flex items-center justify-around gap-4 mt-8">
                 <div class="flex flex-col items-center gap-3">
-                    <i class="fa-solid fa-thumbs-up text-6xl text-blue-500"></i>
+                    <img class="w-28 aspect-video" src="https://post-planner.ca/images/facebook_reactions.png" alt="facebook reactions">
                     <span class="text-gray-500">{{ analytics?.reactions ?? 0}} Reactions</span>
                 </div>
                 <div class="flex flex-col items-center gap-3">
