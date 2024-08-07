@@ -50,10 +50,10 @@ const disconnectChannel = (id) => {
                     </button>
                 </template>
                 <template #content>
-                    <DropdownLink @click="refreshConnection(channel.page_id)" as="button" :href="route('facebook-page-refresh-connection')">
+                    <DropdownLink @click="refreshConnection(channel.page_id)" as="button">
                         Refresh Connection
                     </DropdownLink>
-                    <DropdownLink @click="disconnectChannel(channel.id)" as="button" :href="route('facebook-page-destroy')">
+                    <DropdownLink @click="disconnectChannel(channel.id)" as="button">
                         Disconnect Channel
                     </DropdownLink>
                 </template>

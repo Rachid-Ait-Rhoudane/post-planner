@@ -22,7 +22,7 @@ class FacebookPost extends Model
         'facebook_page_id'
     ];
 
-    public function page() {
+    public function facebook_page() {
 
         return $this->belongsTo(FacebookPage::class);
     }

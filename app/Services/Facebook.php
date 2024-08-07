@@ -131,4 +131,46 @@ class Facebook {
 
         return $response;
     }
+
+    public function videoPostInfo($page_token, $video_id) {
+
+        $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $video_id, [
+            'fields' => 'post_id,permalink_url',
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function postInfo($page_token, $post_id) {
+
+        $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $post_id, [
+            'fields' => 'permalink_url',
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function postAnalytics($page_token, $post_id) {
+
+        $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $post_id, [
+            'fields' => 'reactions.summary(true),comments.summary(true),shares',
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response->collect();
+    }
 }

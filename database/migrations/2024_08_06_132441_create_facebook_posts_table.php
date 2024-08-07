@@ -20,9 +20,6 @@ return new class extends Migration
             $table->string('description');
             $table->string('file_url')->nullable();
             $table->string('file_type')->nullable();
-            $table->string('likes')->nullable();
-            $table->string('comments')->nullable();
-            $table->string('shares')->nullable();
             $table->string('original_link')->nullable();
             $table->foreignId('facebook_page_id')
                 ->constrained()
