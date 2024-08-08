@@ -25,19 +25,28 @@ let show = ref(false);
 
 let analytics = ref({});
 
-let loading = ref(false);
+let loadingAnalytics = ref(false);
+
+let loadingPostDuplication = ref(false);
 
 const showAnalytics = async (id) => {
     show.value = true ;
-    loading.value = true;
+    loadingAnalytics.value = true;
     let results = await axios.get(`/api/analytics/${id}`);
     analytics.value = results.data;
-    loading.value = false;
+    loadingAnalytics.value = false;
 }
 
 const duplicatePost = (postID) => {
     router.post('/duplicate/post', {
         postID
+    }, {
+        onStart: visit => {
+            loadingPostDuplication.value = true;
+        },
+        onFinish: visit => {
+            loadingPostDuplication.value = false;
+        }
     });
 }
 
@@ -62,7 +71,7 @@ const duplicatePost = (postID) => {
                         <i class="fa-solid fa-chart-simple"></i>
                         <span>Analytics</span>
                     </DropdownLink>
-                    <DropdownLink @click="duplicatePost(post.id)" as="button">
+                    <DropdownLink :disabled="loadingPostDuplication" @click="duplicatePost(post.id)" as="button">
                         <i class="fa-solid fa-copy"></i>
                         <span>Duplicate</span>
                     </DropdownLink>
@@ -90,13 +99,13 @@ const duplicatePost = (postID) => {
                     <i class="fa-solid fa-chart-simple"></i>
                     <span>Post Analytics</span>
                 </span>
-                <PrimaryButton :disabled="loading" @click="showAnalytics(post.id)">
+                <PrimaryButton :disabled="loadingAnalytics" @click="showAnalytics(post.id)">
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </PrimaryButton>
             </h1>
         </template>
         <template #content>
-            <div v-if="! loading" class="flex items-center justify-around gap-4 mt-8">
+            <div v-if="! loadingAnalytics" class="flex items-center justify-around gap-4 mt-8">
                 <div class="flex flex-col items-center gap-3">
                     <img class="w-28 aspect-video" src="https://post-planner.ca/images/facebook_reactions.png" alt="facebook reactions">
                     <span class="text-gray-500">{{ analytics?.reactions ?? 0}} Reactions</span>
