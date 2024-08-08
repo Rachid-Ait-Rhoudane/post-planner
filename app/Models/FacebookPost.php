@@ -14,7 +14,7 @@ class FacebookPost extends Model
         'title',
         'description',
         'file_type',
-        'file_url',
+        'file_path',
         'likes',
         'comments',
         'shares',

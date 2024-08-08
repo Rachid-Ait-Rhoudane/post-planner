@@ -67,9 +67,9 @@ const showAnalytics = async (id) => {
         </div>
         <div class="bg-gray-100 p-2 flex flex-col-reverse sm:flex-row gap-5">
             <p class="text-sm flex-1" v-html="postMessage ?? ''"></p>
-            <img v-if="post.file_type === 'image'" class="w-52 aspect-square" :src="post.file_url" alt="post image">
+            <img v-if="post.file_type === 'image'" class="w-52 aspect-square" :src="'/storage/' + post.file_path" alt="post image">
             <video v-else-if="post.file_type === 'video'" class="w-56 aspect-video self-center"  controls>
-                <source :src="post.file_url" type="video/mp4">
+                <source :src="'/storage/' + post.file_path" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>

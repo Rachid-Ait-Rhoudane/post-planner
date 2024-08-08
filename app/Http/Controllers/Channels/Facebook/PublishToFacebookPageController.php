@@ -66,7 +66,7 @@ class PublishToFacebookPageController extends Controller
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
                     'file_type' => 'image',
-                    'file_url' => Storage::disk('public')->url($filePath),
+                    'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
                     'original_link' => $postInfo['permalink_url']
                 ]);
@@ -83,7 +83,7 @@ class PublishToFacebookPageController extends Controller
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
                     'file_type' => 'video',
-                    'file_url' => Storage::disk('public')->url($filePath),
+                    'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
                     'original_link' => 'https://www.facebook.com' . $videoPostInfo['permalink_url']
                 ]);
@@ -104,5 +104,9 @@ class PublishToFacebookPageController extends Controller
         return redirect()->route('publish', [
             'pageID' => $page->id
         ])->banner('post published successfully');
+    }
+
+    public function duplicate(Request $request) {
+
     }
 }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('post_id');
             $table->string('title')->nullable();
             $table->string('description');
-            $table->string('file_url')->nullable();
             $table->string('file_type')->nullable();
+            $table->string('file_path')->nullable();
             $table->string('original_link')->nullable();
             $table->foreignId('facebook_page_id')
                 ->constrained()
