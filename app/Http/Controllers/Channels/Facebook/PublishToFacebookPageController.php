@@ -105,8 +105,4 @@ class PublishToFacebookPageController extends Controller
             'pageID' => $page->id
         ])->banner('post published successfully');
     }
-
-    public function duplicate(Request $request) {
-
-    }
 }

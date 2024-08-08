@@ -3,10 +3,12 @@
 import axios from 'axios';
 import { ref, computed } from 'vue';
 import Dropdown from './Dropdown.vue';
+import { router } from '@inertiajs/vue3';
 import DialogModal from './DialogModal.vue';
 import DropdownLink from './DropdownLink.vue';
 import SpinnerLoader from './SpinnerLoader.vue';
 import PrimaryButton from './PrimaryButton.vue';
+
 
 let props = defineProps({
     post: {
@@ -33,6 +35,12 @@ const showAnalytics = async (id) => {
     loading.value = false;
 }
 
+const duplicatePost = (postID) => {
+    router.post('/duplicate/post', {
+        postID
+    });
+}
+
 </script>
 
 <template>
@@ -54,7 +62,7 @@ const showAnalytics = async (id) => {
                         <i class="fa-solid fa-chart-simple"></i>
                         <span>Analytics</span>
                     </DropdownLink>
-                    <DropdownLink as="button">
+                    <DropdownLink @click="duplicatePost(post.id)" as="button">
                         <i class="fa-solid fa-copy"></i>
                         <span>Duplicate</span>
                     </DropdownLink>

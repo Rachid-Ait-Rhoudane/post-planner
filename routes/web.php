@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\Auth\AuthWithGoogleController;
+use App\Http\Controllers\Channels\Facebook\DuplicatePostController;
 use App\Http\Controllers\Channels\Facebook\FacebookPageChannelController;
 use App\Http\Controllers\Channels\Facebook\PublishToFacebookPageController;
 
@@ -51,4 +52,5 @@ Route::middleware([
 
     Route::get('/publish', [PublishToFacebookPageController::class, 'index'])->name('publish');
     Route::post('/publish/post', [PublishToFacebookPageController::class, 'store'])->name('publish-post');
+    Route::post('/duplicate/post', [DuplicatePostController::class, 'store'])->name('duplicate-post');
 });
