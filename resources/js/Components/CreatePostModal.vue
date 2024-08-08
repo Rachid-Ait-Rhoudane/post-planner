@@ -1,9 +1,9 @@
 <script setup>
 
-import { ref, watch } from 'vue';
 import Modal from './Modal.vue';
 import TextInput from './TextInput.vue';
 import FileInput from './FileInput.vue';
+import FormError from './FormError.vue';
 import { useForm } from '@inertiajs/vue3';
 import PrimaryButton from './PrimaryButton.vue';
 import TextAreaInput from './TextAreaInput.vue';
@@ -29,16 +29,17 @@ let props = defineProps({
     }
 });
 
-const close = () => {
-    emit('close');
-};
-
 const form = useForm({
     channelID: props.currentChannelID,
     description: null,
     file: null,
     fileTitle: null
 });
+
+const close = () => {
+    form.reset();
+    emit('close');
+};
 
 const sendData = async () => {
     form.post('/publish/post', {
@@ -58,23 +59,27 @@ const sendData = async () => {
         :closeable="closeable"
         @close="close"
     >
-
         <div class="px-6 pt-4 text-lg font-medium text-gray-900">
             Create new post
         </div>
         <form @submit.prevent="sendData">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
                 <SelectChannel @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
-                <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
+                <div class="space-y-1">
+                    <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
+                    <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>
+                </div>
                 <div class="space-y-1">
                     <FileInput v-model="form.file" />
-                    <span class="block text-xs text-red-500" v-if="form.errors.file">{{ form.errors.file }}</span>
+                    <FormError v-if="form.errors.file">{{ form.errors.file }}</FormError>
                 </div>
-                <TextInput v-if="form.file" v-model="form.fileTitle" placeholder="file title" class="w-full" />
+                <div v-if="form.file" class="space-y-1">
+                    <TextInput v-model="form.fileTitle" placeholder="file title" class="w-full" />
+                    <FormError v-if="form.errors.fileTitle">{{ form.errors.fileTitle }}</FormError>
+                </div>
             </div>
-
             <div class="flex flex-row justify-end items-center gap-2 px-6 py-4 bg-gray-100 text-right rounded-b-md">
-                <PrimaryButton type="button" @click="close">Cancel</PrimaryButton>
+                <PrimaryButton type="button" @click="close" :disabled="form.processing">Cancel</PrimaryButton>
                 <PrimaryButton type="submit" :disabled="form.processing" >Create</PrimaryButton>
             </div>
         </form>
