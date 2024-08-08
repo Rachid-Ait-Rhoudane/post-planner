@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref } from 'vue';
+import Paginator from './Paginator.vue';
 import { router } from '@inertiajs/vue3';
 import NoPostsFound from './NoPostsFound.vue';
 import FacebookPost from './FacebookPost.vue';
@@ -44,10 +45,11 @@ const changeChannel = (pageID) => {
         </div>
 
         <div class="mt-6 space-y-8">
-            <FacebookPost v-for="post in posts" :key="post.id" :post="post"></FacebookPost>
+            <FacebookPost v-for="post in posts['data']" :key="post.id" :post="post"></FacebookPost>
+            <Paginator :links="posts['links']" />
         </div>
 
-        <NoPostsFound v-if="! posts.length" />
+        <NoPostsFound v-if="! posts['data'].length" />
 
     </div>
 

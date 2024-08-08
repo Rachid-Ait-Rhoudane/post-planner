@@ -13,7 +13,7 @@ defineProps({
 
 <template>
 
-    <div class="flex items-center gap-2 text-xs">
+    <div v-if="links.length > 3" class="flex items-center gap-2 text-xs">
         <template v-for="link in links" :key="link.id">
             <Link
                 v-if="link.url"
