@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthWithGoogleController;
 use App\Http\Controllers\Channels\Facebook\DuplicatePostController;
 use App\Http\Controllers\Channels\Facebook\FacebookPageChannelController;
@@ -21,9 +22,11 @@ use App\Http\Controllers\Channels\Facebook\PublishToFacebookPageController;
 |
 */
 
-Route::get('/auth/google/redirect', [AuthWithGoogleController::class, 'create'])->name('auth-google-redirect');
+Route::middleware('guest')->group(function () {
 
-Route::get('/auth/google/callback', [AuthWithGoogleController::class, 'store'])->name('auth-google-callback');
+    Route::get('/auth/google/redirect', [AuthWithGoogleController::class, 'create'])->name('auth-google-redirect');
+    Route::get('/auth/google/callback', [AuthWithGoogleController::class, 'store'])->name('auth-google-callback');
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -40,9 +43,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/channels', [ChannelController::class, 'index'])->name('channels');
 
