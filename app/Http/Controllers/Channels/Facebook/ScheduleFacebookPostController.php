@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Channels\Facebook;
 
+use DateTime;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Services\Facebook;
@@ -34,11 +35,18 @@ class ScheduleFacebookPostController extends Controller
     public function store(Request $request) {
 
         $attributes = $request->validate([
+            'description' => ['required'],
             'date' => ['required', 'after:now']
         ]);
 
-        $date = new Carbon($attributes['date']);
+        $page = FacebookPage::findOrFail($request->input('channelID'));
+
+        $date = new Carbon($attributes['date'], 'Africa/Casablanca');
 
         Log::alert($date->getTimestamp());
+
+        $postID = $this->facebook->scheduleTextPost($page->page_access_token, $page->page_id, $attributes['description'], $date->getTimestamp());
+
+        Log::alert($date->format($postID));
     }
 }

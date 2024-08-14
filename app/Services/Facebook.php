@@ -173,4 +173,20 @@ class Facebook {
 
         return $response->collect();
     }
+
+    public function scheduleTextPost($facebook_page_token, $page_id, $text, $date) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/feed', [
+            'message' => $text,
+            'published' => false,
+            'scheduled_publish_time' => $date
+        ]);
+
+        // if(! $response->successful()) {
+
+        //     return false;
+        // }
+
+        return $response;
+    }
 }
