@@ -44,14 +44,14 @@ const close = () => {
 };
 
 const sendData = async () => {
-    // form.post('/publish/post', {
+    // form.post('/queue/post', {
     //     onSuccess: (page) => {
     //         form.reset();
     //         emit('close');
     //     }
     // });
 
-    console.log(new Date(form.date).getTime());
+    // console.log(new Date(form.date).getTime());
 }
 
 </script>
@@ -64,9 +64,9 @@ const sendData = async () => {
         @close="close"
     >
         <div class="px-6 pt-4 text-lg font-medium text-gray-900">
-            Create new post
+            Schedule new post
         </div>
-        <form @submit.prevent="sendData">
+        <form @submit.prevent="form.post('/queue/post')">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
                 <SelectChannel @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
                 <div class="space-y-1">

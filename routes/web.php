@@ -57,4 +57,5 @@ Route::middleware([
     Route::post('/duplicate/post', [DuplicatePostController::class, 'store'])->name('duplicate-post');
 
     Route::get('/queue', [ScheduleFacebookPostController::class, 'index'])->name('queue');
+    Route::post('/queue/post', [ScheduleFacebookPostController::class, 'store'])->name('queue-post');
 });
