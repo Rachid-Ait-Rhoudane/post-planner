@@ -48,6 +48,8 @@ Route::middleware([
 
     Route::get('/settings', [SettingController::class, 'index'])->name('profile.settings');
 
+    Route::put('/settings/{user}', [SettingController::class, 'update'])->name('profile.settings.update');
+
     Route::get('/channels', [ChannelController::class, 'index'])->name('channels');
 
     Route::get('/connect/facebook/pages/redirect', [FacebookPageChannelController::class, 'create'])->name('connect-facebook-pages-redirect');

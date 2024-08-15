@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import { router, useForm } from '@inertiajs/vue3';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
@@ -7,6 +8,8 @@ import FormSection from '@/Components/FormSection.vue';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SelectInput from '../../../Components/SelectInput.vue';
+
+const page = usePage();
 
 let props = defineProps({
     timezones: {
@@ -19,10 +22,17 @@ const form = useForm({
     _method: 'PUT',
     timezone: 'UTC',
 });
+
+const updateTimezone = () => {
+    form.post(route('profile.settings.update', page.props.auth.user.id), {
+        preserveScroll: true
+    })
+}
+
 </script>
 
 <template>
-    <FormSection>
+    <FormSection @submitted="updateTimezone">
         <template #title>
             Timezones
         </template>
