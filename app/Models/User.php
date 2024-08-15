@@ -65,4 +65,9 @@ class User extends Authenticatable
 
         return $this->hasMany(FacebookPage::class);
     }
+
+    public function settings() {
+
+        return $this->hasMany(Setting::class);
+    }
 }

@@ -34,9 +34,12 @@ class ScheduleFacebookPostController extends Controller
 
     public function store(Request $request) {
 
+        $minDate = (new Carbon('now', 'Africa/Casablanca'))->addMinutes(10);
+        $maxDate = (new Carbon('now', 'Africa/Casablanca'))->addDays(30);
+
         $attributes = $request->validate([
             'description' => ['required'],
-            'date' => ['required', 'after:now']
+            'date' => ['required','date', 'after:'.$minDate, 'before:'.$maxDate]
         ]);
 
         $page = FacebookPage::findOrFail($request->input('channelID'));
@@ -47,6 +50,6 @@ class ScheduleFacebookPostController extends Controller
 
         $postID = $this->facebook->scheduleTextPost($page->page_access_token, $page->page_id, $attributes['description'], $date->getTimestamp());
 
-        Log::alert($date->format($postID));
+        Log::alert($postID);
     }
 }
