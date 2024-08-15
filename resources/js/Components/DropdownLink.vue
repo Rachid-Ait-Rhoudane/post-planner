@@ -5,7 +5,8 @@ defineProps({
     href: String,
     as: String,
     target: String,
-    disabled: Boolean
+    disabled: Boolean,
+    active: Boolean
 });
 </script>
 
@@ -19,7 +20,7 @@ defineProps({
             <slot />
         </a>
 
-        <Link v-else :href="href" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+        <Link v-else :href="href" class="block px-4 py-2 text-sm leading-5 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" :class="{'bg-indigo-500 text-white': active, 'bg-transparent text-gray-700 hover:bg-gray-100': !active}">
             <slot />
         </Link>
     </div>

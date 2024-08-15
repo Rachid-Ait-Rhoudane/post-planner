@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthWithGoogleController;
 use App\Http\Controllers\Channels\Facebook\DuplicatePostController;
@@ -44,6 +45,8 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/settings', [SettingController::class, 'index'])->name('profile.settings');
 
     Route::get('/channels', [ChannelController::class, 'index'])->name('channels');
 
