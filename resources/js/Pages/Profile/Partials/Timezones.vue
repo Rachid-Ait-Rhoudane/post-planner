@@ -15,12 +15,16 @@ let props = defineProps({
     timezones: {
         type: Array,
         required: true
+    },
+    defaultValue: {
+        type: String,
+        required: true
     }
 });
 
 const form = useForm({
     _method: 'PUT',
-    timezone: 'UTC',
+    timezone: props.defaultValue,
 });
 
 const updateTimezone = () => {

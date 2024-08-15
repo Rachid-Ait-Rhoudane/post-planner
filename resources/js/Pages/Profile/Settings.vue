@@ -7,6 +7,10 @@ let props = defineProps({
     timezones: {
         type: Array,
         required: true
+    },
+    defaultValues: {
+        type: Object,
+        required: true
     }
 });
 
@@ -17,7 +21,7 @@ let props = defineProps({
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div>
-                    <Timezones :timezones="timezones" />
+                    <Timezones :timezones="timezones" :defaultValue="defaultValues.timezone" />
 
                     <SectionBorder />
                 </div>

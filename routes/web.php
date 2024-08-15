@@ -46,7 +46,7 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/settings', [SettingController::class, 'index'])->name('profile.settings');
+    Route::get('/settings', [SettingController::class, 'edit'])->name('profile.settings');
 
     Route::put('/settings/{user}', [SettingController::class, 'update'])->name('profile.settings.update');
 

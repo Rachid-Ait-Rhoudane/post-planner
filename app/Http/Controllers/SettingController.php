@@ -17,9 +17,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Profile/Settings', [
-            'timezones' => collect(config('timezones'))
-        ]);
+
     }
 
     /**
@@ -60,9 +58,18 @@ class SettingController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Request $request)
     {
-        //
+        return Inertia::render('Profile/Settings', [
+            'timezones' => collect(config('timezones')),
+            'defaultValues' => $request->user()
+                                    ->settings()
+                                    ->select('setting_key', 'setting_value')
+                                    ->get()
+                                    ->mapWithKeys(function($e) {
+                                        return [$e['setting_key'] => $e['setting_value']];
+                                    })
+        ]);
     }
 
     /**
