@@ -15,7 +15,7 @@ defineProps({
 let show = ref(false);
 
 const changeChannel = (pageID) => {
-    router.get('/publish', {
+    router.get('/queue', {
         pageID
     })
 }
