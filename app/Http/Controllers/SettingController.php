@@ -90,7 +90,7 @@ class SettingController extends Controller
             $user->settings()->updateOrCreate([
                 'setting_key' => 'timezone'
             ], [
-                'setting_value' => $request->timezone,
+                'setting_value' => $request->input('timezone'),
                 'user_id' => $request->user()->id
             ]);
         }
