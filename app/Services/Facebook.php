@@ -135,7 +135,7 @@ class Facebook {
     public function videoPostInfo($page_token, $video_id) {
 
         $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $video_id, [
-            'fields' => 'post_id,permalink_url',
+            'fields' => 'post_id,permalink_url,published',
         ]);
 
         if(! $response->successful()) {
@@ -149,7 +149,7 @@ class Facebook {
     public function postInfo($page_token, $post_id) {
 
         $response = Http::withToken($page_token)->get('https://graph.facebook.com/v20.0/' . $post_id, [
-            'fields' => 'permalink_url',
+            'fields' => 'permalink_url,is_published',
         ]);
 
         if(! $response->successful()) {
@@ -182,10 +182,46 @@ class Facebook {
             'scheduled_publish_time' => $date
         ]);
 
-        // if(! $response->successful()) {
+        if(! $response->successful()) {
 
-        //     return false;
-        // }
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function shcedulePhotoPost($facebook_page_token, $page_id, $title, $description, $uploadFileHandle, $date) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/photos', [
+            'title' => $title,
+            'message' => $description,
+            'fbuploader_video_file_chunk' => $uploadFileHandle,
+            'published' => false,
+            'scheduled_publish_time' => $date
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function scheduleVideoPost($facebook_page_token, $page_id, $title, $description, $uploadFileHandle, $date) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/videos', [
+            'title' => $title,
+            'description' => $description,
+            'fbuploader_video_file_chunk' => $uploadFileHandle,
+            'published' => false,
+            'scheduled_publish_time' => $date
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
 
         return $response;
     }

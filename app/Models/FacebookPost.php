@@ -19,7 +19,8 @@ class FacebookPost extends Model
         'comments',
         'shares',
         'original_link',
-        'facebook_page_id'
+        'facebook_page_id',
+        'is_published'
     ];
 
     public function facebook_page() {
