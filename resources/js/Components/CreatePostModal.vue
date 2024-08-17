@@ -44,8 +44,7 @@ const close = () => {
 const sendData = async () => {
     form.post('/publish/post', {
         onSuccess: (page) => {
-            form.reset();
-            emit('close');
+            close();
         }
     });
 }

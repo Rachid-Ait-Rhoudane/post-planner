@@ -58,7 +58,8 @@ const duplicatePost = (postID) => {
         <div class="p-2 text-gray-500 flex items-center justify-between gap-4">
             <span class="flex items-center gap-2">
                 <i class="fa-brands fa-facebook text-blue-500"></i>
-                <span class="text-xs">Created on {{ new Date(post.created_at) }}</span>
+                <span v-if="post.is_published" class="text-xs">Created on {{ new Date(post.created_at) }}</span>
+                <span v-else class="text-xs">Scheduled to {{ new Date(post.scheduled_time) }}</span>
             </span>
             <Dropdown>
                 <template #trigger>

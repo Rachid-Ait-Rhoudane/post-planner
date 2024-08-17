@@ -42,12 +42,12 @@ class RemovePostsFromQueue implements ShouldQueue
     public function handle(Facebook $facebook)
     {
         if($this->facebookPost->file_type === 'video') {
-            $videoPostInfo = $this->facebook->videoPostInfo($this->facebookPost->page->page_access_token, $this->facebookPost->post_id);
+            $videoPostInfo = $facebook->videoPostInfo($this->facebookPost->facebook_page->page_access_token, $this->facebookPost->post_id);
             if($videoPostInfo['published']) {
                 $this->facebookPost->update([
-                    'post_id' => $this->facebookPost->page->page_id . '_' . $videoPostInfo['post_id'],
+                    'post_id' => $this->facebookPost->facebook_page->page_id . '_' . $videoPostInfo['post_id'],
                     'is_published' => true,
-                    'original_link' => $videoPostInfo['permalink_url']
+                    'original_link' => 'https://www.facebook.com' . $videoPostInfo['permalink_url']
                 ]);
                 return;
             } else {
@@ -55,7 +55,7 @@ class RemovePostsFromQueue implements ShouldQueue
             }
         }
 
-        $postInfo = $this->facebook->postInfo($this->facebookPost->page->page_access_token, $this->facebookPost->post_id);
+        $postInfo = $facebook->postInfo($this->facebookPost->facebook_page->page_access_token, $this->facebookPost->post_id);
         if($postInfo['is_published']) {
             $this->facebookPost->update([
                 'is_published' => true,

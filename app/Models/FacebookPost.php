@@ -15,12 +15,10 @@ class FacebookPost extends Model
         'description',
         'file_type',
         'file_path',
-        'likes',
-        'comments',
-        'shares',
         'original_link',
         'facebook_page_id',
-        'is_published'
+        'is_published',
+        'scheduled_time'
     ];
 
     public function facebook_page() {

@@ -7,10 +7,12 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Services\Facebook;
 use App\Models\FacebookPage;
+use App\Models\FacebookPost;
 use Illuminate\Http\Request;
 use App\Jobs\RemovePostsFromQueue;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ScheduleFacebookPostController extends Controller
 {
@@ -29,6 +31,7 @@ class ScheduleFacebookPostController extends Controller
         })->first();
 
         return Inertia::render('Queue', [
+            'posts' => $page->posts()->where('is_published', false)->orderBy('created_at', 'desc')->paginate(5)->withQueryString(),
             'currentChannelID' => $page->id
         ]);
     }
@@ -75,15 +78,16 @@ class ScheduleFacebookPostController extends Controller
             if(explode('/', $fileType)[0] === 'image') {
                 $photoPostID = $this->facebook->shcedulePhotoPost($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle, $date->getTimestamp());
                 $facebookPost = FacebookPost::create([
-                    'post_id' => $photoPostID['post_id'],
+                    'post_id' => $page->page_id . '_' . $photoPostID['id'],
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
                     'file_type' => 'image',
                     'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
-                    'is_published' => false
+                    'is_published' => false,
+                    'scheduled_time' => $date
                 ]);
-                RemovePostsFromQueue::dispatch($facebookPost)->delay($date);
+                RemovePostsFromQueue::dispatch($facebookPost)->delay($date->addSeconds(30));
                 return redirect()->route('queue', [
                     'pageID' => $page->id
                 ])->banner('photo scheduled successfully');
@@ -98,9 +102,10 @@ class ScheduleFacebookPostController extends Controller
                     'file_type' => 'video',
                     'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
-                    'is_published' => false
+                    'is_published' => false,
+                    'scheduled_time' => $date
                 ]);
-                RemovePostsFromQueue::dispatch($facebookPost)->delay($date);
+                RemovePostsFromQueue::dispatch($facebookPost)->delay($date->addSeconds(30));
                 return redirect()->route('queue', [
                     'pageID' => $page->id
                 ])->banner('video scheduled successfully');
@@ -113,9 +118,10 @@ class ScheduleFacebookPostController extends Controller
             'post_id' => $postID['id'],
             'description' => $request->input('description'),
             'facebook_page_id' => $page->id,
-            'is_published' => false
+            'is_published' => false,
+            'scheduled_time' => $date
         ]);
-        RemovePostsFromQueue::dispatch($facebookPost)->delay($date);
+        RemovePostsFromQueue::dispatch($facebookPost)->delay($date->addSeconds(30));
         return redirect()->route('queue', [
             'pageID' => $page->id
         ])->banner('post shceduled successfully');
