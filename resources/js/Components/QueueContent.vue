@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref } from 'vue';
 import Paginator from './Paginator.vue';
 import { router } from '@inertiajs/vue3';
