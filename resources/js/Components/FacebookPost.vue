@@ -1,6 +1,5 @@
 <script setup>
 
-import axios from 'axios';
 import { ref, computed } from 'vue';
 import Dropdown from './Dropdown.vue';
 import { router } from '@inertiajs/vue3';

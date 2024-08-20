@@ -1,6 +1,5 @@
 <script setup>
 
-import axios from 'axios';
 import TextInput from './TextInput.vue';
 import { ref, onMounted, watch } from 'vue';
 import SpinnerLoader from './SpinnerLoader.vue';
