@@ -23,7 +23,7 @@ class PublishToFacebookPageController extends Controller
 
     public function index(Request $request) {
 
-        $page = FacebookPage::query()->where('user_id', $request->user()->id)->when($request->query('pageID'), function($query, $pageID) {
+        $page = FacebookPage::query()->when($request->query('pageID'), function($query, $pageID) {
             $query->where('id', $pageID);
         })->first();
 

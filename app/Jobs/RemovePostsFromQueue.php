@@ -5,6 +5,8 @@ namespace App\Jobs;
 use App\Services\Facebook;
 use App\Models\FacebookPost;
 use Illuminate\Bus\Queueable;
+use App\Events\RefreshQueuedPosts;
+use App\Events\RefreshPublishedPosts;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -49,20 +51,21 @@ class RemovePostsFromQueue implements ShouldQueue
                     'is_published' => true,
                     'original_link' => 'https://www.facebook.com' . $videoPostInfo['permalink_url']
                 ]);
-                return;
+            } else {
+                throw new \Exception('post not published yet');
+            }
+        } else {
+            $postInfo = $facebook->postInfo($this->facebookPost->facebook_page->page_access_token, $this->facebookPost->post_id);
+            if($postInfo['is_published']) {
+                $this->facebookPost->update([
+                    'is_published' => true,
+                    'original_link' => $postInfo['permalink_url']
+                ]);
             } else {
                 throw new \Exception('post not published yet');
             }
         }
-
-        $postInfo = $facebook->postInfo($this->facebookPost->facebook_page->page_access_token, $this->facebookPost->post_id);
-        if($postInfo['is_published']) {
-            $this->facebookPost->update([
-                'is_published' => true,
-                'original_link' => $postInfo['permalink_url']
-            ]);
-        } else {
-            throw new \Exception('post not published yet');
-        }
+        RefreshQueuedPosts::dispatch($this->facebookPost->facebook_page_id);
+        RefreshPublishedPosts::dispatch($this->facebookPost->facebook_page_id);
     }
 }

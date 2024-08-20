@@ -1,14 +1,23 @@
 <script setup>
+import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PublishContent from '@/Components/PublishContent.vue';
 
-defineProps({
+let props = defineProps({
     posts: {
         type: Object,
         required: true
     },
     currentChannelID: {
         required: true
+    }
+});
+
+let refreshedPosts = ref(null);
+
+Echo.private(`refresh-posts-${props.currentChannelID}`).listen('RefreshPublishedPosts', (e) => {
+    if(e.pageID == props.currentChannelID) {
+        refreshedPosts.value = e.publishedPosts;
     }
 });
 
@@ -19,7 +28,7 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white shadow-xl sm:rounded-lg">
-                    <PublishContent :posts="posts" :currentChannelID="currentChannelID" />
+                    <PublishContent :posts="refreshedPosts ?? posts" :currentChannelID="currentChannelID" />
                 </div>
             </div>
         </div>

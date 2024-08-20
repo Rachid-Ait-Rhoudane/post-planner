@@ -1,8 +1,9 @@
 <script setup>
+import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import QueueContent from '../Components/QueueContent.vue';
 
-defineProps({
+let props = defineProps({
     posts: {
         type: Object,
         required: true
@@ -11,6 +12,15 @@ defineProps({
         required: true
     }
 });
+
+let refreshedPosts = ref(null);
+
+Echo.private(`refresh-posts-${props.currentChannelID}`).listen('RefreshQueuedPosts', (e) => {
+    if(e.pageID == props.currentChannelID) {
+        refreshedPosts.value = e.queuedPosts
+    };
+});
+
 </script>
 
 <template>
@@ -18,7 +28,7 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white shadow-xl sm:rounded-lg">
-                    <QueueContent :posts="posts" :currentChannelID="currentChannelID" />
+                    <QueueContent :posts="refreshedPosts ?? posts" :currentChannelID="currentChannelID" />
                 </div>
             </div>
         </div>
