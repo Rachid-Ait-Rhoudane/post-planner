@@ -13,6 +13,7 @@ use App\Jobs\RemovePostsFromQueue;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class ScheduleFacebookPostController extends Controller
 {
@@ -29,6 +30,12 @@ class ScheduleFacebookPostController extends Controller
         $page = FacebookPage::query()->when($request->query('pageID'), function($query, $pageID) {
             $query->where('id', $pageID);
         })->first();
+
+        if($page) {
+            $this->authorize('view', $page);
+        } else {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
         return Inertia::render('Queue', [
             'posts' => $page ? $page->posts()
@@ -66,6 +73,8 @@ class ScheduleFacebookPostController extends Controller
         $date = new Carbon($attributes['date'], $settings['timezone']);
 
         $page = FacebookPage::findOrFail($request->input('channelID'));
+
+        $this->authorize('postToChannel', $page);
 
         if($request->hasFile('file')) {
 

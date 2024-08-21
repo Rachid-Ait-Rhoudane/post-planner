@@ -73,6 +73,8 @@ class FacebookPageChannelController extends Controller
 
     public function update(Request $request, FacebookPage $facebookPage) {
 
+        $this->authorize('refreshConnection', $facebookPage);
+
         $page =  $this->facebook->refreshPageConnection($request->user()->facebook_user_token, $facebookPage->page_id);
 
         if(! $page) {
@@ -93,6 +95,8 @@ class FacebookPageChannelController extends Controller
     }
 
     public function destroy(FacebookPage $facebookPage) {
+
+        $this->authorize('disconnect', $facebookPage);
 
         $facebookPage->delete();
 

@@ -2,93 +2,32 @@
 
 namespace App\Policies\Channels\Facebook;
 
-use App\Models\FacebookPage;
 use App\Models\User;
+use App\Models\FacebookPage;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FacebookPagePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FacebookPage  $facebookPage
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
     public function view(User $user, FacebookPage $facebookPage)
     {
-        //
+        return $user->id === $facebookPage->user_id ? Response::allow() : Response::deny("You're not authorized to view the posts of this channel");
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
+    public function postToChannel(User $user, FacebookPage $facebookPage)
     {
-        //
+        return $user->id === $facebookPage->user_id ? Response::allow() : Response::deny("You're not authorized to post to this channel");
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FacebookPage  $facebookPage
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function update(User $user, FacebookPage $facebookPage)
+    public function refreshConnection(User $user, FacebookPage $facebookPage)
     {
-        //
+        return $user->id === $facebookPage->user_id ? Response::allow() : Response::deny("You're not authorized to refresh this channel connection");
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FacebookPage  $facebookPage
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user, FacebookPage $facebookPage)
+    public function disconnect(User $user, FacebookPage $facebookPage)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FacebookPage  $facebookPage
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, FacebookPage $facebookPage)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FacebookPage  $facebookPage
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, FacebookPage $facebookPage)
-    {
-        //
+        return $user->id === $facebookPage->user_id ? Response::allow() : Response::deny("You're not authorized to disconnect this channel");
     }
 }
