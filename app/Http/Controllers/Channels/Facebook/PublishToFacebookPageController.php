@@ -28,8 +28,17 @@ class PublishToFacebookPageController extends Controller
         })->first();
 
         return Inertia::render('Publish', [
-            'posts' => $page->posts()->where('is_published', true)->orderBy('created_at', 'desc')->paginate(5)->withQueryString(),
-            'currentChannelID' => $page->id
+            'posts' => $page ? $page->posts()
+                            ->where('is_published', true)
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(5)
+                            ->withQueryString():
+                            [
+                                "data" => [],
+                                "links" => []
+                            ],
+            'channelsExists' => FacebookPage::all()->count() ? true : false,
+            'currentChannelID' => $page ? $page->id : 0
         ]);
     }
 

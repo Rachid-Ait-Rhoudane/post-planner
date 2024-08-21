@@ -31,8 +31,17 @@ class ScheduleFacebookPostController extends Controller
         })->first();
 
         return Inertia::render('Queue', [
-            'posts' => $page->posts()->where('is_published', false)->orderBy('created_at', 'desc')->paginate(5)->withQueryString(),
-            'currentChannelID' => $page->id
+            'posts' => $page ? $page->posts()
+                                    ->where('is_published', false)
+                                    ->orderBy('created_at', 'desc')
+                                    ->paginate(5)
+                                    ->withQueryString():
+                                    [
+                                        "data" => [],
+                                        "links" => []
+                                    ],
+            'channelsExists' => FacebookPage::all()->count() ? true : false,
+            'currentChannelID' => $page ? $page->id : 0
         ]);
     }
 

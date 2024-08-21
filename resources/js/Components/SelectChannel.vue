@@ -3,6 +3,7 @@
 import TextInput from './TextInput.vue';
 import { ref, onMounted, watch } from 'vue';
 import SpinnerLoader from './SpinnerLoader.vue';
+import NoChannelsFound from './NoChannelsFound.vue';
 import SearchChannelCard from './SearchChannelCard.vue';
 
 defineProps({
@@ -11,13 +12,15 @@ defineProps({
     }
 });
 
-defineEmits(['changeChannel']);
+let emit = defineEmits(['changeChannel']);
 
 let channels = ref([]);
 
 let open = ref(false);
 
 let arrow = ref(null);
+
+let loading = ref(false);
 
 const filterDropdown = () => {
     open.value = !open.value;
@@ -36,11 +39,13 @@ onMounted(async () => {
 let search = ref('');
 
 watch(search, async (newValue) => {
+    loading.value = true;
     let results = await axios.get('/api/channels', {
         params: {
             search: newValue
         }
     });
+    loading.value = false;
     channels.value = await results.data.data;
 });
 
@@ -72,7 +77,8 @@ watch(search, async (newValue) => {
                 </div>
                 <div class="w-full mt-2 max-h-36 overflow-auto">
                     <SearchChannelCard v-if="channels.length > 0" @click="$emit('changeChannel', channel.id)" v-for="channel in channels" :key="channel.id" :channel="channel" :active="channel.id == currentChannelID" />
-                    <SpinnerLoader v-else />
+                    <SpinnerLoader v-else-if="loading" />
+                    <NoChannelsFound v-else />
                 </div>
             </div>
         </transition>

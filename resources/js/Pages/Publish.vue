@@ -8,6 +8,9 @@ let props = defineProps({
         type: Object,
         required: true
     },
+    channelsExists: {
+        type: Boolean
+    },
     currentChannelID: {
         required: true
     }
@@ -28,7 +31,7 @@ Echo.private(`refresh-posts-${props.currentChannelID}`).listen('RefreshPublished
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white shadow-xl sm:rounded-lg">
-                    <PublishContent :posts="refreshedPosts ?? posts" :currentChannelID="currentChannelID" />
+                    <PublishContent :posts="refreshedPosts ?? posts" :channelsExists="channelsExists" :currentChannelID="currentChannelID" />
                 </div>
             </div>
         </div>

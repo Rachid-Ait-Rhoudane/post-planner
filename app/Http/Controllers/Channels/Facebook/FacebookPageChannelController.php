@@ -71,17 +71,16 @@ class FacebookPageChannelController extends Controller
         return redirect()->route('channels')->banner('Channel connected successfully');
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, FacebookPage $facebookPage) {
 
-        $page =  $this->facebook->refreshPageConnection($request->user()->facebook_user_token, $request->input('page_id'));
+        $page =  $this->facebook->refreshPageConnection($request->user()->facebook_user_token, $facebookPage->page_id);
 
         if(! $page) {
 
             return redirect()->route('channels')->dangerBanner('Refreshing your Facebook page connection faild');
         }
 
-        FacebookPage::where('page_id', $request->input('page_id'))
-                    ->update([
+        $facebookPage->update([
                         'page_id' => $page['id'],
                         'page_name' => $page['name'],
                         'page_category' => $page['category'],
@@ -93,9 +92,9 @@ class FacebookPageChannelController extends Controller
         return redirect()->route('channels')->banner('Channel connection refreshed successfully');
     }
 
-    public function destroy(Request $request) {
+    public function destroy(FacebookPage $facebookPage) {
 
-        FacebookPage::destroy($request->input('id'));
+        $facebookPage->delete();
 
         return redirect()->route('channels')->banner('Channel disconnected successfully');
     }

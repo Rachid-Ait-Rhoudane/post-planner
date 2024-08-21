@@ -12,17 +12,11 @@ defineProps({
 });
 
 const refreshConnection = (id) => {
-    router.post('/facebook/page/refresh/connection', {
-        page_id: id,
-        _method: 'PUT'
-    });
+    router.put(`/facebook/page/refresh/connection/${id}`);
 }
 
 const disconnectChannel = (id) => {
-    router.post('/facebook/page/destroy', {
-        id,
-        _method: 'DELETE'
-    });
+    router.delete(`/facebook/page/destroy/${id}`);
 }
 
 </script>
@@ -50,7 +44,7 @@ const disconnectChannel = (id) => {
                     </button>
                 </template>
                 <template #content>
-                    <DropdownLink @click="refreshConnection(channel.page_id)" as="button">
+                    <DropdownLink @click="refreshConnection(channel.id)" as="button">
                         Refresh Connection
                     </DropdownLink>
                     <DropdownLink @click="disconnectChannel(channel.id)" as="button">

@@ -7,6 +7,7 @@ import { router } from '@inertiajs/vue3';
 import DialogModal from './DialogModal.vue';
 import ChannelCard from './ChannelCard.vue';
 import PrimaryButton from './PrimaryButton.vue';
+import NoChannelsFound from './NoChannelsFound.vue';
 import ConnectedChannelCard from './ConnectedChannelCard.vue';
 
 let props = defineProps({
@@ -41,10 +42,10 @@ watch(search, (newValue) => {
 
         <div class="relative flex justify-between items-center gap-10">
             <h3 class="text-gray-500">All connected channels</h3>
-            <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600 text-sm sm:text-base">New channel</button>
+            <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer capitalize hover:bg-blue-600 text-sm sm:text-base">connect channel</button>
         </div>
 
-        <div class="relative w-full my-6">
+        <div v-if="channels.data.length > 0" class="relative w-full my-6">
             <i class="fa-solid fa-magnifying-glass text-xl text-gray-400 absolute top-1/2 -translate-y-1/2 left-2"></i>
             <TextInput v-model="search" class="w-full pl-8" placeholder="Search for a channel" />
         </div>
@@ -56,7 +57,7 @@ watch(search, (newValue) => {
                 :key="channel.id"
                 :channel="channel"
             />
-            <p v-else class="text-gray-500 italic w-fit mx-auto">No data found</p>
+            <NoChannelsFound v-else />
         </div>
 
         <Paginator v-if="channels.links >= 2" class="mt-6" :links="channels.links" />

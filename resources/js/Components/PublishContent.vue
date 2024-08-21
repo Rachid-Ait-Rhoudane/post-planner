@@ -13,6 +13,9 @@ let props = defineProps({
         type: Object,
         required: true
     },
+    channelsExists: {
+        type: Boolean
+    },
     currentChannelID: {
         required: true
     }
@@ -34,7 +37,7 @@ const changeChannel = (pageID) => {
 
         <div class="relative flex justify-between items-center gap-4">
             <h3 class="text-gray-500 text-sm sm:text-base" >All Published Posts</h3>
-            <div class="flex items-center gap-4">
+            <div v-if="channelsExists" class="flex items-center gap-4">
                 <SelectChannel @changeChannel="changeChannel" :currentChannelID="currentChannelID" />
                 <button @click="show = true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600 text-sm sm:text-base" type="button">
                     <i class="fa-solid fa-plus"></i>
@@ -42,6 +45,9 @@ const changeChannel = (pageID) => {
                 </button>
                 <CreatePostModal :show="show" @close="show = false" :currentChannelID="currentChannelID" />
             </div>
+            <p class="text-xs text-red-500 text-italic" v-else>
+                You didn't connect any channels yet
+            </p>
         </div>
 
         <div class="mt-6 space-y-8">
