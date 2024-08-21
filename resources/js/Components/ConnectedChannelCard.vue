@@ -1,8 +1,11 @@
 <script setup>
 
+import { ref } from 'vue';
 import Dropdown from './Dropdown.vue';
 import { router } from '@inertiajs/vue3';
 import DropdownLink from './DropdownLink.vue';
+import ConfirmationModal from './ConfirmationModal.vue';
+import PrimaryButton from './PrimaryButton.vue';
 
 defineProps({
     channel: {
@@ -10,6 +13,8 @@ defineProps({
         required: true
     }
 });
+
+let show = ref(false);
 
 const refreshConnection = (id) => {
     router.put(`/facebook/page/refresh/connection/${id}`);
@@ -47,12 +52,28 @@ const disconnectChannel = (id) => {
                     <DropdownLink @click="refreshConnection(channel.id)" as="button">
                         Refresh Connection
                     </DropdownLink>
-                    <DropdownLink @click="disconnectChannel(channel.id)" as="button">
+                    <DropdownLink @click="show = true" as="button">
                         Disconnect Channel
                     </DropdownLink>
                 </template>
             </Dropdown>
         </div>
     </div>
+
+    <ConfirmationModal :show="show">
+        <template #title>
+            Disconnect Channel Confirmation
+        </template>
+        <template #content>
+            <p class="font-bold text-lg">Are you sure you want to disconnect this channel ?</p>
+            <ul class="ml-4 list-disc my-2">
+                <li class="text-red-500 text-sm">Once disconnected you'll lose all its related published and queued posts !</li>
+            </ul>
+        </template>
+        <template #footer>
+            <PrimaryButton @click="show = false" >Cancel</PrimaryButton>
+            <PrimaryButton @click="disconnectChannel(channel.id)">Confirm</PrimaryButton>
+        </template>
+    </ConfirmationModal>
 
 </template>
