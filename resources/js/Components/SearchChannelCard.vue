@@ -1,5 +1,7 @@
 <script setup>
 
+import FacebookPageProfilePicture from './FacebookPageProfilePicture.vue';
+
 defineProps({
     channel: {
         type: Object,
@@ -16,12 +18,7 @@ defineProps({
 <template>
 
     <div class="p-1 flex items-center gap-2 hover:cursor-pointer" :class="{'bg-indigo-500 text-white': active, 'hover:bg-gray-100': !active}">
-        <div class="relative w-fil">
-            <img class="w-8 aspect-square rounded-full" :src="channel.channel_profile_picture" alt="facebook page profile picture" />
-            <span class="w-4 h-4 absolute right-0 bottom-0 bg-blue-500 rounded-full flex items-center justify-center">
-                <i class="fa-brands fa-facebook-f text-xs text-white"></i>
-            </span>
-        </div>
+        <FacebookPageProfilePicture :src="channel.channel_profile_picture" />
         <div>
             <h3 class="text-sm font-bold">{{ channel.channel_name }}</h3>
             <span class="block text-xs" :class="{'text-gray-500': !active}">Facebook Page</span>

@@ -63,7 +63,7 @@ const sendData = async () => {
         </div>
         <form @submit.prevent="sendData">
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
-                <SelectChannel @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
+                <SelectChannel :showCurrentChannelName="true" @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
                 <div class="space-y-1">
                     <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                     <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>

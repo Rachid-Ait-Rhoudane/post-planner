@@ -5,7 +5,7 @@
             <i class="fa-solid fa-ban text-xl text-white"></i>
         </span>
         <span class="font-bold">No posts found</span>
-        <span class="text-sm text-gray-500 italic">There are no posts with chosen channel, try changing to another channel</span>
+        <span class="text-sm text-gray-500 italic text-center">There are no posts with chosen channel, try changing to another channel</span>
     </p>
 
 </template>

@@ -34,12 +34,12 @@ const changeChannel = (pageID) => {
     <div class="p-4">
 
         <div class="relative flex justify-between items-center gap-4">
-            <h3 class="text-gray-500 text-sm sm:text-base" >All Queued Posts</h3>
+            <h3 class="text-gray-500 text-sm sm:text-base" >Queued Posts</h3>
             <div v-if="channelsExists" class="flex items-center gap-4">
                 <SelectChannel @changeChannel="changeChannel" :currentChannelID="currentChannelID" />
-                <button @click="show = true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-2 hover:bg-blue-600 text-sm sm:text-base" type="button">
+                <button @click="show = true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-1 hover:bg-blue-600 text-sm sm:text-base" type="button">
                     <i class="fa-solid fa-plus"></i>
-                    <span>New Post</span>
+                    <span>Post</span>
                 </button>
                 <SchedulePostModal :show="show" @close="show = false" :currentChannelID="currentChannelID" />
             </div>
