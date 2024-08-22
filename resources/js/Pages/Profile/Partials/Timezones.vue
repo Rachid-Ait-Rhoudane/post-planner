@@ -28,7 +28,7 @@ const form = useForm({
 });
 
 const updateTimezone = () => {
-    form.post(route('profile.settings.update', page.props.auth.user.id), {
+    form.post(route('profile.settings.update'), {
         preserveScroll: true
     })
 }

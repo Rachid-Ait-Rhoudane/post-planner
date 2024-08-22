@@ -79,7 +79,7 @@ class SettingController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         if($request->has('timezone')) {
 
@@ -87,7 +87,7 @@ class SettingController extends Controller
                 'timezone' => [Rule::in(config('timezones'))]
             ]);
 
-            $user->settings()->updateOrCreate([
+            $request->user()->settings()->updateOrCreate([
                 'setting_key' => 'timezone'
             ], [
                 'setting_value' => $request->input('timezone'),

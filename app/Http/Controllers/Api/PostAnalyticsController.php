@@ -47,6 +47,9 @@ class PostAnalyticsController extends Controller
      */
     public function show(FacebookPost $facebookPost)
     {
+
+        $this->authorize('viewPostAnalytics', $facebookPost);
+
         $page = $facebookPost->facebook_page;
 
         $analytics = $this->facebook->postAnalytics($page->page_access_token, $facebookPost->post_id);

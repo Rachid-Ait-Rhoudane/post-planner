@@ -48,7 +48,7 @@ Route::middleware([
 
     Route::get('/settings', [SettingController::class, 'edit'])->name('profile.settings');
 
-    Route::put('/settings/{user}', [SettingController::class, 'update'])->name('profile.settings.update'); // why I passed the user ?
+    Route::put('/settings', [SettingController::class, 'update'])->name('profile.settings.update'); // why I passed the user ?
 
     Route::get('/channels', [ChannelController::class, 'index'])->name('channels');
 

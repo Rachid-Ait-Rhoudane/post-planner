@@ -23,6 +23,7 @@ class DuplicatePostController extends Controller
         $page_id = $post->facebook_page->page_id;
         $page_access_token = $post->facebook_page->page_access_token;
 
+        $this->authorize('duplicatePost', $post);
         $this->authorize('postToChannel', $post->facebook_page);
 
         if($post->file_type) {

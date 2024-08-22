@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\FacebookPage;
+use App\Models\FacebookPost;
 use App\Policies\Channels\Facebook\FacebookPagePolicy;
+use App\Policies\Channels\Facebook\FacebookPostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,7 +16,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        FacebookPage::class => FacebookPagePolicy::class
+        FacebookPage::class => FacebookPagePolicy::class,
+        FacebookPost::class => FacebookPostPolicy::class
     ];
 
     /**
