@@ -37,11 +37,10 @@ const changeChannel = (pageID) => {
 
         <div class="relative flex justify-between items-center gap-4">
             <h3 class="text-gray-500 text-sm sm:text-base" >Published Posts</h3>
-            <div v-if="channelsExists" class="flex items-center gap-4">
+            <div v-if="channelsExists" class="flex items-center gap-1">
                 <SelectChannel @changeChannel="changeChannel" :currentChannelID="currentChannelID" />
                 <button @click="show = true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer space-x-1 hover:bg-blue-600 text-sm sm:text-base" type="button">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Post</span>
+                    <i class="fa-solid fa-plus text-xs"></i>
                 </button>
                 <CreatePostModal :show="show" @close="show = false" :currentChannelID="currentChannelID" />
             </div>
