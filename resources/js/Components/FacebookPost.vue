@@ -58,7 +58,7 @@ const duplicatePost = (postID) => {
         <div class="p-2 text-gray-500 flex items-center justify-between gap-4">
             <span class="flex items-center gap-2">
                 <i class="fa-brands fa-facebook text-blue-500"></i>
-                <span v-if="post.is_published" class="text-xs font-bold">Created on {{ moment.tz(post.created_at, moment.tz.guess()).format("YYYY-MM-DD HH:mm:ss Z") }}</span>
+                <span v-if="post.is_published" class="text-xs font-bold">Created on {{ post.scheduled_time ? moment.tz(post.scheduled_time, moment.tz.guess()).format("dddd DD MMMM YYYY HH:mm:ss Z") : moment.tz(post.created_at, moment.tz.guess()).format("YYYY-MM-DD HH:mm:ss Z") }}</span>
                 <span v-else class="text-xs font-bold">Scheduled to {{ moment.tz(post.scheduled_time, moment.tz.guess()).format("dddd DD MMMM YYYY HH:mm:ss Z") }}</span>
             </span>
             <Dropdown>

@@ -6,6 +6,7 @@ import NoPostsFound from './NoPostsFound.vue';
 import FacebookPost from './FacebookPost.vue';
 import SelectChannel from './SelectChannel.vue';
 import SchedulePostModal from './SchedulePostModal.vue';
+import FacebookQueuedPost from './FacebookQueuedPost.vue';
 
 defineProps({
     posts: {
@@ -48,7 +49,7 @@ const changeChannel = (pageID) => {
         </div>
 
         <div class="mt-6 space-y-8">
-            <FacebookPost v-for="post in posts['data']" :key="post.id" :post="post"></FacebookPost>
+            <FacebookQueuedPost v-for="post in posts['data']" :key="post.id" :post="post"></FacebookQueuedPost>
             <Paginator :links="posts['links']" />
         </div>
 
