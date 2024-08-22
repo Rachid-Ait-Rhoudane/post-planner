@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref, computed } from 'vue';
+import moment from 'moment-timezone';
 import Dropdown from './Dropdown.vue';
 import { router } from '@inertiajs/vue3';
 import DialogModal from './DialogModal.vue';
@@ -57,8 +58,8 @@ const duplicatePost = (postID) => {
         <div class="p-2 text-gray-500 flex items-center justify-between gap-4">
             <span class="flex items-center gap-2">
                 <i class="fa-brands fa-facebook text-blue-500"></i>
-                <span v-if="post.is_published" class="text-xs">Created on {{ new Date(post.created_at) }}</span>
-                <span v-else class="text-xs">Scheduled to {{ new Date(post.scheduled_time) }}</span>
+                <span v-if="post.is_published" class="text-xs font-bold">Created on {{ moment.tz(post.created_at, moment.tz.guess()).format("YYYY-MM-DD HH:mm:ss Z") }}</span>
+                <span v-else class="text-xs font-bold">Scheduled to {{ moment.tz(post.scheduled_time, moment.tz.guess()).format("dddd DD MMMM YYYY HH:mm:ss Z") }}</span>
             </span>
             <Dropdown>
                 <template #trigger>

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('facebook_posts', function (Blueprint $table) {
-            $table->date('scheduled_time')->default(null)->nullable();
+            $table->timestamp('scheduled_time')->default(null)->nullable();
         });
     }
 
