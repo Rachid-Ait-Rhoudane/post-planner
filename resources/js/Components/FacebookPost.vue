@@ -85,8 +85,8 @@ const duplicatePost = (postID) => {
         </div>
         <div class="bg-gray-100 p-2 flex flex-col-reverse sm:flex-row gap-5">
             <p class="text-sm flex-1" v-html="postMessage ?? ''"></p>
-            <img v-if="post.file_type === 'image'" class="w-52 aspect-square" :src="'/storage/' + post.file_path" alt="post image">
-            <video v-else-if="post.file_type === 'video'" class="w-56 aspect-video self-center"  controls>
+            <img v-if="post.file_type === 'image'" class="w-60 aspect-square mx-auto sm:mx-0" :src="'/storage/' + post.file_path" alt="post image">
+            <video v-else-if="post.file_type === 'video'" class="w-72 aspect-video self-center"  controls>
                 <source :src="'/storage/' + post.file_path" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
