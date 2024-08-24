@@ -43,7 +43,7 @@ class RemovePostsFromQueue implements ShouldQueue
      */
     public function handle(Facebook $facebook)
     {
-        if($this->facebookPost->file_type === 'video') {
+        if(count(explode('_', $this->facebookPost->post_id)) === 1) {
             $videoPostInfo = $facebook->videoPostInfo($this->facebookPost->facebook_page->page_access_token, $this->facebookPost->post_id);
             if($videoPostInfo['published']) {
                 $this->facebookPost->update([

@@ -62,7 +62,7 @@ class PublishToFacebookPageController extends Controller
         if($request->hasFile('file')) {
 
             $request->validate([
-                'file' => ['mimetypes:application/pdf,image/jpeg,image/jpg,image/png,video/mp4'],
+                'file' => ['mimetypes:image/jpeg,image/jpg,image/png,video/mp4'],
                 'fileTitle' => ['required']
             ]);
 

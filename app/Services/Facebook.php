@@ -225,4 +225,70 @@ class Facebook {
 
         return $response;
     }
+
+    public function updateFilePost($facebook_page_token, $postID, $title, $description, $uploadFileHandle) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph.facebook.com/v20.0/'. $postID, [
+            'title' => $title,
+            'message' => $description,
+            'fbuploader_video_file_chunk' => $uploadFileHandle,
+        ]);
+
+        logger($response);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function updatePost($facebook_page_token, $postID, $description) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph.facebook.com/v20.0/'. $postID, [
+            'message' => $description,
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function updateFilePostAndScheduleTime($facebook_page_token, $postID, $title, $description, $uploadFileHandle, $date) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph.facebook.com/v20.0/'. $postID, [
+            'title' => $title,
+            'message' => $description,
+            'fbuploader_video_file_chunk' => $uploadFileHandle,
+            'published' => false,
+            'scheduled_publish_time' => $date
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function updatePostAndScheduleTime($facebook_page_token, $postID, $description, $date) {
+
+        $response = Http::withToken($facebook_page_token)->post('https://graph.facebook.com/v20.0/'. $postID, [
+            'message' => $description,
+            'published' => false,
+            'scheduled_publish_time' => $date
+        ]);
+
+        if(! $response->successful()) {
+
+            return false;
+        }
+
+        return $response;
+    }
 }

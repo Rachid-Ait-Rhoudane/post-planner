@@ -63,4 +63,5 @@ Route::middleware([
 
     Route::get('/queue', [ScheduleFacebookPostController::class, 'index'])->name('queue');
     Route::post('/queue/post', [ScheduleFacebookPostController::class, 'store'])->name('queue-post');
+    Route::put('/queue/update/post', [ScheduleFacebookPostController::class, 'update'])->name('queue-update-post');
 });

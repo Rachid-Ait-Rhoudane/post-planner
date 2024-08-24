@@ -34,7 +34,8 @@ const form = useForm({
     date: null,
     description: props.post.description,
     file: null,
-    fileTitle: null
+    fileTitle: null,
+    _method: 'PUT'
 });
 
 const close = () => {
@@ -43,11 +44,11 @@ const close = () => {
 };
 
 const sendData = () => {
-    // form.post('/queue/post', {
-    //     onSuccess: (page) => {
-    //         close();
-    //     }
-    // });
+    form.post(route('queue-update-post'), {
+        onSuccess: (page) => {
+            close();
+        }
+    });
 }
 
 </script>
@@ -68,7 +69,7 @@ const sendData = () => {
                     <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                     <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>
                 </div>
-                <div class="space-y-1">
+                <div v-if="post.file_type" class="space-y-1">
                     <FileInput v-model="form.file" />
                     <FormError v-if="form.errors.file">{{ form.errors.file }}</FormError>
                 </div>
