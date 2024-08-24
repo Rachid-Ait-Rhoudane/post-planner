@@ -139,8 +139,7 @@ class ScheduleFacebookPostController extends Controller
             'is_published' => false,
             'scheduled_time' => $date
         ]);
-        $job = RemovePostsFromQueue::dispatch($facebookPost)->delay($date->addSeconds(30));
-        logger($job->getJobId());
+        RemovePostsFromQueue::dispatch($facebookPost)->delay($date->addSeconds(30));
         return redirect()->route('queue', [
             'pageID' => $page->id
         ])->banner('post shceduled successfully');
@@ -207,6 +206,7 @@ class ScheduleFacebookPostController extends Controller
 
             if(isset($date)) {
                 $postUpdated = $this->facebook->updateFilePostAndScheduleTime($page->page_access_token, $pagePostID, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle, $date->getTimestamp());
+                //TODO : change queued job delai
                 $post->update([
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
@@ -237,6 +237,8 @@ class ScheduleFacebookPostController extends Controller
 
         if(isset($date)) {
             $postUpdated = $this->facebook->updatePostAndScheduleTime($page->page_access_token, $pagePostID, $request->input('description'), $date->getTimestamp());
+            //TODO : change queued job delai
+            RemovePostsFromQueue::dispatch($post)->delay($date->addSeconds(30));
             $post->update([
                 'description' => $request->input('description'),
                 'scheduled_time' => $date
