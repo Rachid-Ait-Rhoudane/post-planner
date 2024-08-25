@@ -18,7 +18,8 @@ class FacebookPost extends Model
         'original_link',
         'facebook_page_id',
         'is_published',
-        'scheduled_time'
+        'scheduled_time',
+        'job_id'
     ];
 
     public function facebook_page() {

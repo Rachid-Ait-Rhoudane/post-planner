@@ -55,7 +55,7 @@ const duplicatePost = (postID) => {
 <template>
 
     <div class="rounded-md shadow-md border border-gray-200">
-        <div class="p-2 text-gray-500 flex items-center justify-between gap-4">
+        <div class="p-2 text-gray-500 flex items-center justify-between gap-4 border-b border-b-gray-200">
             <span class="flex items-center gap-2">
                 <i class="fa-brands fa-facebook text-blue-500"></i>
                 <span v-if="post.is_published" class="text-xs font-bold">Created on {{ post.scheduled_time ? moment.tz(post.scheduled_time, moment.tz.guess()).format("dddd DD MMMM YYYY HH:mm:ss Z") : moment.tz(post.created_at, moment.tz.guess()).format("YYYY-MM-DD HH:mm:ss Z") }}</span>
@@ -83,7 +83,7 @@ const duplicatePost = (postID) => {
                 </template>
             </Dropdown>
         </div>
-        <div class="bg-gray-100 p-2 flex flex-col-reverse sm:flex-row gap-5">
+        <div class="p-2 flex flex-col-reverse sm:flex-row gap-5">
             <p class="text-sm flex-1" v-html="postMessage ?? ''"></p>
             <img v-if="post.file_type === 'image'" class="w-60 aspect-square mx-auto sm:mx-0" :src="'/storage/' + post.file_path" alt="post image">
             <video v-else-if="post.file_type === 'video'" class="w-72 aspect-video self-center"  controls>

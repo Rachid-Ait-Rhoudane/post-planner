@@ -105,7 +105,7 @@ class Facebook {
         $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/photos', [
             'title' => $title,
             'message' => $description,
-            'fbuploader_video_file_chunk' => $uploadFileHandle
+            'fbuploader_photo_file_chunk' => $uploadFileHandle
         ]);
 
         if(! $response->successful()) {
@@ -190,12 +190,12 @@ class Facebook {
         return $response;
     }
 
-    public function shcedulePhotoPost($facebook_page_token, $page_id, $title, $description, $uploadFileHandle, $date) {
+    public function schedulePhotoPost($facebook_page_token, $page_id, $title, $description, $uploadFileHandle, $date) {
 
         $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/photos', [
             'title' => $title,
             'message' => $description,
-            'fbuploader_video_file_chunk' => $uploadFileHandle,
+            'fbuploader_photo_file_chunk' => $uploadFileHandle,
             'published' => false,
             'scheduled_publish_time' => $date
         ]);
@@ -231,10 +231,8 @@ class Facebook {
         $response = Http::withToken($facebook_page_token)->post('https://graph.facebook.com/v20.0/'. $postID, [
             'title' => $title,
             'message' => $description,
-            'fbuploader_video_file_chunk' => $uploadFileHandle,
+            'fbuploader_file_chunk' => $uploadFileHandle,
         ]);
-
-        logger($response);
 
         if(! $response->successful()) {
 
@@ -263,7 +261,7 @@ class Facebook {
         $response = Http::withToken($facebook_page_token)->post('https://graph.facebook.com/v20.0/'. $postID, [
             'title' => $title,
             'message' => $description,
-            'fbuploader_video_file_chunk' => $uploadFileHandle,
+            'fbuploader_file_chunk' => $uploadFileHandle,
             'published' => false,
             'scheduled_publish_time' => $date
         ]);
