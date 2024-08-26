@@ -226,4 +226,18 @@ class ScheduleFacebookPostController extends Controller
             'pageID' => $page->id
         ])->banner('post updated successfully');
     }
+
+    public function destroy(FacebookPost $facebookPost) {
+
+        DB::table('jobs')
+            ->where('id', $facebookPost->job_id)
+            ->delete();
+        if(Storage::disk('public')->exists($facebookPost->file_path ?? 'no-post-file')) {
+            Storage::disk('public')->delete($facebookPost->file_path);
+        };
+        $facebookPost->delete();
+        return redirect()->route('queue', [
+            'pageID' => $facebookPost->facebook_page->id
+        ])->banner('post deleted successfully');
+    }
 }

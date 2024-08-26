@@ -26,7 +26,7 @@ const postDescription = computed(() => {
 });
 
 const deletePost = (id) => {
-    console.log(`post ${id} deleted`);
+    router.delete(route('queue-delete-post', id));
 }
 
 </script>
