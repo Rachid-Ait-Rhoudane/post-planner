@@ -68,9 +68,10 @@ class ScheduleFacebookPostController extends Controller
                                 return [$e['setting_key'] => $e['setting_value']];
                             });
 
+        $now = new Carbon('now', $settings['timezone']);
         $attributes = $request->validate([
             'description' => ['required'],
-            'date' => ['required','date']
+            'date' => ['required','date', 'after:' . $now]
         ]);
 
         $date = new Carbon($attributes['date'], $settings['timezone']);
@@ -152,13 +153,6 @@ class ScheduleFacebookPostController extends Controller
 
         $this->authorize('updatePost', $post);
 
-        if($post->file_type === 'video') {
-            $videoPostInfo = $this->facebook->videoPostInfo($page->page_access_token, $post->post_id);
-            $pagePostID = $videoPostInfo['post_id'];
-        } else {
-            $pagePostID = $post->post_id;
-        }
-
         if($request->date('date')) {
             $settings = $request->user()
                                 ->settings()
@@ -167,50 +161,35 @@ class ScheduleFacebookPostController extends Controller
                                 ->mapWithKeys(function($e) {
                                     return [$e['setting_key'] => $e['setting_value']];
                                 });
-            $minDate = (new Carbon('now', $settings['timezone']))->addMinutes(10);
-            $maxDate = (new Carbon('now', $settings['timezone']))->addDays(30);
+
+            $now = new Carbon('now', $settings['timezone']);
             $attributes = $request->validate([
-                'date' => ['date', 'after:'.$minDate, 'before:'.$maxDate]
+                'date' => ['date', 'after:'. $now]
             ]);
             $date = new Carbon($attributes['date'], $settings['timezone']);
             DB::table('jobs')
                 ->where('id', $post->job_id)
                 ->update([
-                    "available_at" => $date->addSeconds(30)->getTimestamp()
+                    "available_at" => $date->getTimestamp()
                 ]);
         }
 
         if($request->hasFile('file')) {
 
-            if($post->file_type === 'image') {
-                $request->validate([
-                    'file' => ['mimetypes:image/jpeg,image/jpg,image/png'],
-                    'fileTitle' => ['required']
-                ]);
-            } elseif($post->file_type === 'video') {
-                $request->validate([
-                    'file' => ['mimetypes:video/mp4'],
-                    'fileTitle' => ['required']
-                ]);
-            } else {
-                return back()->withErrors([
-                    'file' => 'Sorry, you cant update a text post to a image/video post !'
-                ]);
-            }
+            $request->validate([
+                'file' => ['mimetypes:image/jpeg,image/jpg,image/png,video/mp4'],
+                'fileTitle' => ['required']
+            ]);
 
-            Storage::disk('public')->delete($post->file_path);
+            if(Storage::disk('public')->exists($post->file_path ?? 'no-post-file')) {
+                Storage::disk('public')->delete($post->file_path);
+            };
+
             $file = $request->file('file');
             $filePath = Storage::disk('public')->put('/files', $file);
-            $fileName = $file->getClientOriginalName();
-            $fileLength = Storage::disk('public')->size($filePath);
             $fileType = Storage::disk('public')->mimeType($filePath);
 
-            $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
-
-            $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath), $fileName);
-
             if(isset($date)) {
-                $postUpdated = $this->facebook->updateFilePostAndScheduleTime($page->page_access_token, $pagePostID, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle, $date->getTimestamp());
                 $post->update([
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
@@ -219,7 +198,6 @@ class ScheduleFacebookPostController extends Controller
                     'scheduled_time' => $date
                 ]);
             } else {
-                $postUpdated = $this->facebook->updateFilePost($page->page_access_token, $pagePostID, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
                 $post->update([
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
@@ -228,34 +206,20 @@ class ScheduleFacebookPostController extends Controller
                 ]);
             }
 
-            if(! $postUpdated['success']) {
-                return redirect()->route('queue', [
-                    'pageID' => $page->id
-                ])->danger('something went wrong, please try again later');
-            }
-
             return redirect()->route('queue', [
                 'pageID' => $page->id
             ])->banner('post updated successfully');
         }
 
         if(isset($date)) {
-            $postUpdated = $this->facebook->updatePostAndScheduleTime($page->page_access_token, $pagePostID, $request->input('description'), $date->getTimestamp());
             $post->update([
                 'description' => $request->input('description'),
                 'scheduled_time' => $date
             ]);
         } else {
-            $postUpdated = $this->facebook->updatePost($page->page_access_token, $pagePostID, $request->input('description'));
             $post->update([
                 'description' => $request->input('description')
             ]);
-        }
-
-        if(! $postUpdated['success']) {
-            return redirect()->route('queue', [
-                'pageID' => $page->id
-            ])->danger('something went wrong, please try again later');
         }
 
         return redirect()->route('queue', [

@@ -69,7 +69,7 @@ const sendData = () => {
                     <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                     <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>
                 </div>
-                <div v-if="post.file_type" class="space-y-1">
+                <div class="space-y-1">
                     <FileInput v-model="form.file" />
                     <FormError v-if="form.errors.file">{{ form.errors.file }}</FormError>
                 </div>
