@@ -105,7 +105,7 @@ class Facebook {
         $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/photos', [
             'title' => $title,
             'message' => $description,
-            'fbuploader_photo_file_chunk' => $uploadFileHandle
+            'fbuploader_file_chunk' => $uploadFileHandle
         ]);
 
         if(! $response->successful()) {
@@ -121,7 +121,7 @@ class Facebook {
         $response = Http::withToken($facebook_page_token)->post('https://graph-video.facebook.com/v20.0/'. $page_id .'/videos', [
             'title' => $title,
             'description' => $description,
-            'fbuploader_video_file_chunk' => $uploadFileHandle
+            'fbuploader_file_chunk' => $uploadFileHandle
         ]);
 
         if(! $response->successful()) {

@@ -9,7 +9,7 @@ use App\Services\Facebook;
 use App\Models\FacebookPage;
 use App\Models\FacebookPost;
 use Illuminate\Http\Request;
-use App\Jobs\RemovePostsFromQueue;
+use App\Jobs\PublishScheduledPost;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -68,12 +68,9 @@ class ScheduleFacebookPostController extends Controller
                                 return [$e['setting_key'] => $e['setting_value']];
                             });
 
-        $minDate = (new Carbon('now', $settings['timezone']))->addMinutes(10);
-        $maxDate = (new Carbon('now', $settings['timezone']))->addDays(30);
-
         $attributes = $request->validate([
             'description' => ['required'],
-            'date' => ['required','date', 'after:'.$minDate, 'before:'.$maxDate]
+            'date' => ['required','date']
         ]);
 
         $date = new Carbon($attributes['date'], $settings['timezone']);
@@ -87,18 +84,10 @@ class ScheduleFacebookPostController extends Controller
 
             $file = $request->file('file');
             $filePath = Storage::disk('public')->put('/files', $file);
-            $fileName = $file->getClientOriginalName();
-            $fileLength = Storage::disk('public')->size($filePath);
             $fileType = Storage::disk('public')->mimeType($filePath);
 
-            $uploadSessionID = $this->facebook->startUploadSession($request->user()->facebook_user_token, $fileName, $fileLength, $fileType);
-
-            $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath), $fileName);
-
             if(explode('/', $fileType)[0] === 'image') {
-                $photoPostID = $this->facebook->schedulePhotoPost($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle, $date->getTimestamp());
                 $facebookPost = FacebookPost::create([
-                    'post_id' => $page->page_id . '_' . $photoPostID['id'],
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
                     'file_type' => 'image',
@@ -107,8 +96,8 @@ class ScheduleFacebookPostController extends Controller
                     'is_published' => false,
                     'scheduled_time' => $date
                 ]);
-                $job = new RemovePostsFromQueue($facebookPost);
-                $job->delay($date->addSeconds(30));
+                $job = new PublishScheduledPost($facebookPost);
+                $job->delay($date);
                 $jobId = app(Dispatcher::class)->dispatch($job);
                 $facebookPost->update([
                     'job_id' => $jobId
@@ -119,9 +108,7 @@ class ScheduleFacebookPostController extends Controller
             }
 
             if(explode('/', $fileType)[0] === 'video') {
-                $videoPostID = $this->facebook->scheduleVideoPost($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle, $date->getTimestamp());
                 $facebookPost = FacebookPost::create([
-                    'post_id' => $videoPostID['id'],
                     'title' => $request->input('fileTitle'),
                     'description' => $request->input('description'),
                     'file_type' => 'video',
@@ -130,8 +117,8 @@ class ScheduleFacebookPostController extends Controller
                     'is_published' => false,
                     'scheduled_time' => $date
                 ]);
-                $job = new RemovePostsFromQueue($facebookPost);
-                $job->delay($date->addSeconds(30));
+                $job = new PublishScheduledPost($facebookPost);
+                $job->delay($date);
                 $jobId = app(Dispatcher::class)->dispatch($job);
                 $facebookPost->update([
                     'job_id' => $jobId
@@ -140,19 +127,15 @@ class ScheduleFacebookPostController extends Controller
                     'pageID' => $page->id
                 ])->banner('video scheduled successfully');
             }
-
         }
-
-        $postID = $this->facebook->scheduleTextPost($page->page_access_token, $page->page_id, $request->input('description'), $date->getTimestamp());
         $facebookPost = FacebookPost::create([
-            'post_id' => $postID['id'],
             'description' => $request->input('description'),
             'facebook_page_id' => $page->id,
             'is_published' => false,
             'scheduled_time' => $date
         ]);
-        $job = new RemovePostsFromQueue($facebookPost);
-        $job->delay($date->addSeconds(30));
+        $job = new PublishScheduledPost($facebookPost);
+        $job->delay($date);
         $jobId = app(Dispatcher::class)->dispatch($job);
         $facebookPost->update([
             'job_id' => $jobId
