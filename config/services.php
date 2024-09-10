@@ -33,13 +33,13 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'https://post-planner.ca/auth/google/callback',
+        'redirect' => 'https://poplanner.online/auth/google/callback',
     ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'https://post-planner.ca/connect/facebook/pages/callback',
+        'redirect' => 'https://poplanner.online/connect/facebook/pages/callback',
     ],
 
 ];
