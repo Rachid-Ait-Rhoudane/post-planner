@@ -52,9 +52,9 @@ let showMobileMenu = ref(false);
                 >
                     <div v-show="showMobileMenu" class="absolute z-20 right-0 bg-white rounded-md border border-gray-100 shadow-md min-w-52 py-2">
                         <div class="flex flex-col md:gap-10">
-                            <a class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#about_us">About Us</a>
-                            <a class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#">Pricing</a>
-                            <a class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#">Contact</a>
+                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#about_us">About Us</a>
+                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#">Pricing</a>
+                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#">Contact</a>
                         </div>
                         <hr class="h-0.5 bg-gray-100 mx-2 my-1" />
                         <div v-if="canLogin">
@@ -107,14 +107,14 @@ let showMobileMenu = ref(false);
 
             <h1 class="text-3xl sm:text-4xl font-black text-center">Grow your audience without consuming all your time</h1>
 
-            <p class="text-gray-500 text-center w-full sm:w-3/4 lg:w-1/2 mx-auto mt-8">Creating content is challenging enough, not to mention distributing it across multiple marketing channels. Here are four ways <span class="text-[#6875f5] font-black">POPlanner</span> can assist you.</p>
+            <p class="text-gray-500 text-center w-full px-2 sm:w-3/4 lg:w-1/2 mx-auto mt-8">Creating content is challenging enough, not to mention distributing it across multiple marketing channels. Here are four ways <span class="text-[#6875f5] font-black">POPlanner</span> can assist you.</p>
 
             <div class="max-w-7xl mx-auto px-3 flex gap-16 mt-8 py-16">
                 <div class="flex-1 space-y-8">
                     <span class="block text-[#6875f5] font-black">1. Connect to your social media channels</span>
                     <h1 class="font-black text-2xl">Effortlessly Connect and Manage Your Social Media Channels</h1>
                     <p><span class="text-[#6875f5] font-black leading-7">POPlanner</span> will make it easy for you to connect with all your social media channels, including Facebook pages, Instagram accounts, and more. Whether you're managing multiple profiles or just a few, <span class="text-[#6875f5] font-black">POPlanner</span> streamlines the process so you can seamlessly integrate and manage your online presence across various platforms.</p>
-                    <Link class="block px-6 py-2 bg-blue-500 text-white font-bold w-fit rounded-full hover:bg-blue-600" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
+                    <Link class="block px-6 py-4 bg-blue-500 text-white font-bold w-full text-center sm:w-fit  rounded-full hover:bg-blue-600" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
                         Start Connecting Your Channels
                     </Link>
                 </div>
@@ -127,7 +127,7 @@ let showMobileMenu = ref(false);
                         <span class="block text-[#6875f5] font-black">2. Post to your social media channels</span>
                         <h1 class="font-black text-2xl">Seamlessly Post and Track Basic Social Media Analytics</h1>
                         <p><span class="text-[#6875f5] font-black leading-7">POPlanner</span> will simplify the process of posting content directly to your connected social media channels, allowing you to effortlessly share updates across platforms like Facebook, Instagram, and more. Additionally, you can track the performance of your posts with our built-in analytics tools, which currently monitor simple metrics like reactions (likes, hearts, etc.), comments, and shares—all from within our application.</p>
-                        <Link class="block px-6 py-2 bg-blue-500 text-white font-bold w-fit rounded-full hover:bg-blue-600" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
+                        <Link class="block px-6 py-4 bg-blue-500 text-white font-bold w-full text-center sm:w-fit rounded-full hover:bg-blue-600" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
                             Start Posting To Your Channels
                         </Link>
                     </div>
@@ -140,7 +140,7 @@ let showMobileMenu = ref(false);
                     <span class="block text-[#6875f5] font-black">3. Schedule your posts to your social media channels</span>
                     <h1 class="font-black text-2xl">Easy Scheduling for Your Social Media Posts</h1>
                     <p><span class="text-[#6875f5] font-black leading-7">POPlanner</span> enables you to schedule posts to your social media channels at any time you choose. Instead of manually posting at various times based on your needs, you can now rely on <span class="text-[#6875f5] font-black">POPlanner</span> to handle the timing for you with just a few simple clicks. This streamlined scheduling feature ensures your content is shared when it's most effective, allowing you to focus on other important aspects of your strategy.</p>
-                    <Link class="block px-6 py-2 bg-blue-500 text-white font-bold w-fit rounded-full hover:bg-blue-600" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
+                    <Link class="block px-6 py-4 bg-blue-500 text-white font-bold w-full text-center sm:w-fit rounded-full hover:bg-blue-600" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
                         Start Scheduling Your Posts
                     </Link>
                 </div>
@@ -151,7 +151,7 @@ let showMobileMenu = ref(false);
 
         <div id="about_us" class="relative my-16 h-[500px] overflow-hidden flex items-center">
             <img class="absolute top-0 left-0 w-full h-full object-cover object-right md:object-center" src="https://poplanner.online/images/about_us.png" alt="about us">
-            <div class="absolute top-0 left-0 w-full h-full bg-black/70 md:bg-black/30"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-black/50 md:bg-black/30"></div>
             <div class="relative max-w-7xl mx-auto px-3 py-16 text-white flex flex-col gap-12">
                 <h1 class="text-4xl font-black">About Us</h1>
                 <p class="w-full md:w-[65%] leading-7 font-bold">POPlanner is designed to simplify social media management for everyone. Our app lets you easily connect your social channels, schedule posts, and track basic analytics like reactions, comments, and shares—all in one place. With just a few clicks, you can automate your posts and monitor engagement, saving time and helping you grow your online presence more efficiently.</p>
