@@ -19,7 +19,7 @@ let showMobileMenu = ref(false);
     <nav class="bg-gray-100 shadow-md">
 
         <div class="max-w-7xl mx-auto flex justify-between items-center px-3 py-5">
-            <img class="w-20 sm:w-28" src="https://post-planner.ca/images/POPlanner.png" alt="app logo">
+            <img class="w-20 sm:w-28" src="https://poplanner.online/images/POPlanner.png" alt="app logo">
             <div class="hidden sm:flex sm:items-center sm:gap-4 md:gap-10">
                 <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#">About Us</a>
                 <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#">Pricing</a>
@@ -100,7 +100,7 @@ let showMobileMenu = ref(false);
                 </p>
             </div>
 
-            <img class="w-[450px] aspect-video" src="https://post-planner.ca/images/social_media_channels.png" alt="social media channels">
+            <img class="w-[450px] aspect-video" src="https://poplanner.online/images/social_media_channels.png" alt="social media channels">
         </div>
 
         <div class="my-32">
@@ -118,7 +118,7 @@ let showMobileMenu = ref(false);
                         Start Connecting Your Channels
                     </Link>
                 </div>
-                <img class="hidden lg:block" src="https://post-planner.ca/images/connect_social_media_channels.png" alt="connect social media channels">
+                <img class="hidden lg:block" src="https://poplanner.online/images/connect_social_media_channels.png" alt="connect social media channels">
             </div>
 
             <div class="bg-gray-100">
@@ -131,7 +131,7 @@ let showMobileMenu = ref(false);
                             Start Posting To Your Channels
                         </Link>
                     </div>
-                    <img class="hidden lg:block lg:w-[435px]" src="https://post-planner.ca/images/post_to_social_media_channels.png" alt="post to social media channels">
+                    <img class="hidden lg:block lg:w-[435px]" src="https://poplanner.online/images/post_to_social_media_channels.png" alt="post to social media channels">
                 </div>
             </div>
 
@@ -144,7 +144,7 @@ let showMobileMenu = ref(false);
                         Start Scheduling Your Posts
                     </Link>
                 </div>
-                <img class="hidden lg:block lg:w-[450px] lg:rounded-full" src="https://post-planner.ca/images/schedule_posts.png" alt="schedule posts">
+                <img class="hidden lg:block lg:w-[450px] lg:rounded-full" src="https://poplanner.online/images/schedule_posts.png" alt="schedule posts">
             </div>
 
         </div>
