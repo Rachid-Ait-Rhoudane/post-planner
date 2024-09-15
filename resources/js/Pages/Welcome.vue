@@ -43,11 +43,11 @@ onMounted(() => {
     <nav class="bg-gray-100 shadow-md">
 
         <div class="max-w-7xl mx-auto flex justify-between items-center px-3 py-5">
-            <img class="w-20 sm:w-28" src="https://poplanner.online/images/POPlanner.png" alt="app logo">
+            <img class="w-20 sm:w-28" src="https://post-planner.ca/images/POPlanner.png" alt="app logo">
             <div class="hidden sm:flex sm:items-center sm:gap-4 md:gap-10">
                 <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#about_us">About Us</a>
                 <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#pricing">Pricing</a>
-                <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#contact_us">Contact</a>
+                <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#contact_us">Contact Us</a>
             </div>
             <div v-if="canLogin" class="hidden sm:block">
                 <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="text-blue-500 font-bold hover:text-blue-600 hover:underline">Dashboard</Link>
@@ -78,7 +78,7 @@ onMounted(() => {
                         <div class="flex flex-col md:gap-10">
                             <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#about_us">About Us</a>
                             <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#pricing">Pricing</a>
-                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#contact_us">Contact</a>
+                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#contact_us">Contact Us</a>
                         </div>
                         <hr class="h-0.5 bg-gray-100 mx-2 my-1" />
                         <div v-if="canLogin">
@@ -128,7 +128,7 @@ onMounted(() => {
                 </p>
             </div>
 
-            <img class="w-[450px] aspect-video" src="https://poplanner.online/images/social_media_channels.png" alt="social media channels">
+            <img class="w-[450px] aspect-video" src="https://post-planner.ca/images/social_media_channels.png" alt="social media channels">
         </div>
 
         <div class="mt-32">
@@ -146,7 +146,7 @@ onMounted(() => {
                         Start Connecting Your Channels
                     </Link>
                 </div>
-                <img class="hidden lg:block" src="https://poplanner.online/images/connect_social_media_channels.png" alt="connect social media channels">
+                <img class="hidden lg:block" src="https://post-planner.ca/images/connect_social_media_channels.png" alt="connect social media channels">
             </div>
 
             <div class="bg-gray-100">
@@ -159,7 +159,7 @@ onMounted(() => {
                             Start Posting To Your Channels
                         </Link>
                     </div>
-                    <img class="hidden lg:block lg:w-[435px]" src="https://poplanner.online/images/post_to_social_media_channels.png" alt="post to social media channels">
+                    <img class="hidden lg:block lg:w-[435px]" src="https://post-planner.ca/images/post_to_social_media_channels.png" alt="post to social media channels">
                 </div>
             </div>
 
@@ -172,13 +172,13 @@ onMounted(() => {
                         Start Scheduling Your Posts
                     </Link>
                 </div>
-                <img class="hidden lg:block lg:w-[450px] lg:rounded-full" src="https://poplanner.online/images/schedule_posts.png" alt="schedule posts">
+                <img class="hidden lg:block lg:w-[450px] lg:rounded-full" src="https://post-planner.ca/images/schedule_posts.png" alt="schedule posts">
             </div>
 
         </div>
 
         <div id="about_us" class="relative mt-16 h-[700px] overflow-hidden flex items-center">
-            <img class="absolute top-0 left-0 w-full h-full object-cover object-right md:object-center" src="https://poplanner.online/images/about_us.png" alt="about us">
+            <img class="absolute top-0 left-0 w-full h-full object-cover object-right md:object-center" src="https://post-planner.ca/images/about_us.png" alt="about us">
             <div class="absolute top-0 left-0 w-full h-full bg-black/50 md:bg-black/30"></div>
             <div class="relative max-w-7xl mx-auto px-3 py-16 text-white flex flex-col gap-12">
                 <h1 class="text-4xl font-black">About Us</h1>
@@ -318,7 +318,7 @@ onMounted(() => {
 
                 </form>
 
-                <div class="mt-20">
+                <div class="mt-8 mb-8 sm:mt-20">
                     <h1 class="text-xl font-black flex items-center gap-2 text-green-500">
                         <i class="fa-brands fa-whatsapp text-3xl"></i>
                         <span>Reach Us via WhatsApp</span>
@@ -334,6 +334,92 @@ onMounted(() => {
         </div>
 
     </main>
+
+    <footer class="relative w-full min-h-[600px] bg-gray-100 mt-32 pt-16 pb-32">
+
+        <div class="max-w-7xl mx-auto px-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-20 gap-y-10">
+
+            <div class="space-y-8">
+                <img class="w-52" src="https://post-planner.ca/images/POPlanner.png" alt="app logo">
+                <p class="text-gray-500"><span class="text-pop font-black">POPlanner</span> makes managing your social media easy with features for scheduling posts, tracking basic analytics, and connecting your channels. Streamline your online presence and focus on what matters.</p>
+                <Link class="relative block w-full text-center p-5 bg-blue-500 text-white font-bold rounded-full hover:bg-blue-600 sm:w-fit" v-if="!$page.props.auth.user && canRegister" :href="route('register')">
+                    Join Us For Free
+                </Link>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-2xl font-black text-gray-700">QUICK LINKS</h3>
+                <ul>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#about_us">About Us</a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#contact_us">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-2xl font-black text-gray-700">POLICIES AND TERMS</h3>
+                <ul>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">Privacy Policy</a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">Terms of Service</a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">Cookie Policy</a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">User Agreement</a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">Legal Information</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-2xl font-black text-gray-700">FIND US</h3>
+                <ul>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="text-gray-500 font-bold py-6 flex items-center gap-2 group-hover:text-pop" href="#">
+                            <i class="fa-brands fa-facebook text-2xl"></i>
+                            <span>POPlannerApp</span>
+                        </a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="text-gray-500 font-bold py-6 flex items-center gap-2 group-hover:text-pop" href="#">
+                            <i class="fa-brands fa-instagram text-2xl"></i>
+                            <span>@POPlannerApp</span>
+                        </a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="text-gray-500 font-bold py-6 flex items-center gap-2 group-hover:text-pop" href="#">
+                            <i class="fa-brands fa-x-twitter text-2xl"></i>
+                            <span>@POPlannerApp</span>
+                        </a>
+                    </li>
+                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                        <a class="text-gray-500 font-bold py-6 flex items-center gap-2 group-hover:text-pop" href="#">
+                            <i class="fa-brands fa-linkedin text-2xl"></i>
+                            <span>POPlannerApp</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-6 w-full max-w-[1280px] flex justify-between items-center border-t border-gray-300">
+            <span class="block w-fit text-pop font-black">POPlanner</span>
+            <span>&copy;2024 All Right Reserved</span>
+        </div>
+
+    </footer>
 
 </template>
 
