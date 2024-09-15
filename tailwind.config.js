@@ -15,6 +15,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'pop': '#6875f5',
+              },
         },
     },
 
