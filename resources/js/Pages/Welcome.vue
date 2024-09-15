@@ -356,7 +356,7 @@ onMounted(() => {
                     <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
                         <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#pricing">Pricing</a>
                     </li>
-                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                    <li class="group ml-0 duration-300 hover:ml-2">
                         <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#contact_us">Contact Us</a>
                     </li>
                 </ul>
@@ -377,7 +377,7 @@ onMounted(() => {
                     <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
                         <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">User Agreement</a>
                     </li>
-                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                    <li class="group ml-0 duration-300 hover:ml-2">
                         <a class="block text-gray-500 font-bold py-6 group-hover:text-pop" href="#">Legal Information</a>
                     </li>
                 </ul>
@@ -404,7 +404,7 @@ onMounted(() => {
                             <span>@POPlannerApp</span>
                         </a>
                     </li>
-                    <li class="group ml-0 duration-300 hover:ml-2 border-b border-b-gray-300">
+                    <li class="group ml-0 duration-300 hover:ml-2">
                         <a class="text-gray-500 font-bold py-6 flex items-center gap-2 group-hover:text-pop" href="#">
                             <i class="fa-brands fa-linkedin text-2xl"></i>
                             <span>POPlannerApp</span>
@@ -412,6 +412,7 @@ onMounted(() => {
                     </li>
                 </ul>
             </div>
+
         </div>
 
         <div class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-6 w-full max-w-[1280px] flex justify-between items-center border-t border-gray-300">
