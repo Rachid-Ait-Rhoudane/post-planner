@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
@@ -11,6 +11,28 @@ defineProps({
 let showMobileMenu = ref(false);
 
 let paymentOption = ref('monthly');
+
+window.addEventListener('scroll', function() {
+    if(this.scrollY >= 750) {
+        if(toTopBtn.classList.contains('-right-14')) {
+            toTopBtn.classList.remove('-right-14');
+            toTopBtn.classList.add('right-5');
+        }
+    } else {
+        if(toTopBtn.classList.contains('right-5')) {
+            toTopBtn.classList.remove('right-5');
+            toTopBtn.classList.add('-right-14');
+        }
+    }
+});
+
+onMounted(() => {
+    toTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0
+        });
+    });
+});
 
 </script>
 
@@ -25,7 +47,7 @@ let paymentOption = ref('monthly');
             <div class="hidden sm:flex sm:items-center sm:gap-4 md:gap-10">
                 <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#about_us">About Us</a>
                 <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#pricing">Pricing</a>
-                <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#">Contact</a>
+                <a class="text-gray-500 font-bold hover:underline hover:text-gray-400" href="#contact_us">Contact</a>
             </div>
             <div v-if="canLogin" class="hidden sm:block">
                 <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="text-blue-500 font-bold hover:text-blue-600 hover:underline">Dashboard</Link>
@@ -56,7 +78,7 @@ let paymentOption = ref('monthly');
                         <div class="flex flex-col md:gap-10">
                             <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#about_us">About Us</a>
                             <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#pricing">Pricing</a>
-                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#">Contact</a>
+                            <a @click="showMobileMenu = false" class="text-gray-500 font-bold p-2 hover:bg-indigo-500 hover:text-white" href="#contact_us">Contact</a>
                         </div>
                         <hr class="h-0.5 bg-gray-100 mx-2 my-1" />
                         <div v-if="canLogin">
@@ -76,6 +98,10 @@ let paymentOption = ref('monthly');
         </div>
 
     </nav>
+
+    <button id="toTopBtn" class="block w-14 h-14 rounded-full border border-white bg-pop fixed z-50 bottom-10 -right-14 duration-200 animate-bounce" type="button">
+        <i class="fa-solid fa-arrow-up font-black text-white text-xl"></i>
+    </button>
 
     <main>
 
@@ -166,7 +192,7 @@ let paymentOption = ref('monthly');
             </div>
         </div>
 
-        <div id="pricing" class="my-32">
+        <div id="pricing" class="mt-32">
 
             <h1 class="text-3xl sm:text-4xl font-black text-center">Budget-Friendly Plans for Every Content Creator</h1>
 
@@ -177,14 +203,14 @@ let paymentOption = ref('monthly');
                 <div class="w-fit mx-auto" >
                     <button
                         @click="paymentOption = 'monthly'"
-                        class="px-3 py-2 border-r-transparent"
+                        class="px-3 py-2 border-r-transparent rounded-l-md"
                         :class="{'border border-pop bg-pop text-white': paymentOption === 'monthly', 'border border-gray-300 text-gray-500': paymentOption === 'yearly'}"
                         type="button">
                             Monthly
                     </button>
                     <button
                         @click="paymentOption = 'yearly'"
-                        class="px-3 py-2"
+                        class="px-3 py-2 rounded-r-md"
                         :class="{'border border-pop bg-pop text-white': paymentOption === 'yearly', 'border border-gray-300 text-gray-500': paymentOption === 'monthly'}"
                         type="button">
                             Yearly
@@ -255,6 +281,52 @@ let paymentOption = ref('monthly');
                         <span class="relative z-10">Start Your Professional Plan</span>
                     </button>
                     <span class="absolute bottom-3 left-1/2 -translate-x-1/2 text-red-500 text-xs text-center">Apologies, this plan is coming soon and isn’t available just yet.</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="contact_us" class="my-32">
+
+            <h1 class="text-3xl sm:text-4xl font-black text-center">Have Questions Or Need Support?</h1>
+
+            <p class="text-gray-500 text-center w-full px-2 sm:w-3/4 lg:w-1/2 mx-auto mt-8">We're here to help! Reach out to us with any inquiries or feedback, and we'll get back to you as soon as possible.</p>
+
+            <div class="max-w-7xl mx-auto px-3 py-5 flex flex-col-reverse sm:flex-row gap-5">
+
+                <form class="flex-1 flex flex-col mt-0 sm:mt-16">
+
+                    <div class="flex flex-col gap-2">
+                        <label class="font-black text-pop" for="name">Your Name :</label>
+                        <input class="border border-gray-300 rounded-md h-14 focus:outline-none" id="name" type="text" placeholder="Your name is..." />
+                    </div>
+
+                    <div class="flex flex-col gap-2 mt-6">
+                        <label class="font-black text-pop" for="subject">Subject :</label>
+                        <input class="border border-gray-300 rounded-md h-14 focus:outline-none" id="subject" type="text" placeholder="Your message's subject" />
+                    </div>
+
+                    <div class="flex flex-col gap-2 mt-6">
+                        <label class="font-black text-pop" for="message">Message :</label>
+                        <textarea class="border border-gray-300 rounded-md resize-none" id="message" placeholder="Your message" rows="12"></textarea>
+                    </div>
+
+                    <button class="self-end relative mt-6 block w-fit p-5 border border-pop text-pop font-bold rounded-md hover:text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-0 after:bg-pop after:duration-150 after:rounded-md hover:after:h-full" type="button">
+                        <span class="block w-fit relative z-10">Send Message</span>
+                    </button>
+
+                </form>
+
+                <div class="mt-20">
+                    <h1 class="text-xl font-black flex items-center gap-2 text-green-500">
+                        <i class="fa-brands fa-whatsapp text-3xl"></i>
+                        <span>Reach Us via WhatsApp</span>
+                    </h1>
+                    <p class="space-y-2 mt-2">
+                        <span class="ml-10 block text-gray-500">+212623102020</span>
+                        <span class="ml-10 block text-gray-500">+212623102020</span>
+                    </p>
                 </div>
 
             </div>
