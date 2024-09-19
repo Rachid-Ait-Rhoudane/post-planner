@@ -21,6 +21,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "chart.js": "^4.4.4",
         "laravel-vite-plugin": "^1.0.5",
         "moment-timezone": "^0.5.45"
     }
