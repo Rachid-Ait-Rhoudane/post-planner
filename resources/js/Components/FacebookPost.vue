@@ -108,7 +108,7 @@ const duplicatePost = (postID) => {
         <template #content>
             <div v-if="! loadingAnalytics" class="flex items-center justify-around gap-4 mt-8">
                 <div class="flex flex-col items-center gap-3">
-                    <img class="w-28 aspect-video" src="https://post-planner.ca/images/facebook_reactions.png" alt="facebook reactions">
+                    <img class="w-28 aspect-video" src="/images/facebook_reactions.png" alt="facebook reactions">
                     <span class="text-gray-500">{{ analytics?.reactions ?? 0}} Reactions</span>
                 </div>
                 <div class="flex flex-col items-center gap-3">
