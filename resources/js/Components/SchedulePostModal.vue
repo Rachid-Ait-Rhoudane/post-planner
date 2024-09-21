@@ -67,6 +67,10 @@ const sendData = async () => {
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
                 <SelectChannel :showCurrentChannelName="true" @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
                 <div class="space-y-1">
+                    <DateInput v-model="form.date"></DateInput>
+                    <FormError v-if="form.errors.date">{{ form.errors.date }}</FormError>
+                </div>
+                <div class="space-y-1">
                     <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
                     <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>
                 </div>
@@ -77,10 +81,6 @@ const sendData = async () => {
                 <div v-if="form.file" class="space-y-1">
                     <TextInput v-model="form.fileTitle" placeholder="file title" class="w-full" />
                     <FormError v-if="form.errors.fileTitle">{{ form.errors.fileTitle }}</FormError>
-                </div>
-                <div class="space-y-1">
-                    <DateInput v-model="form.date"></DateInput>
-                    <FormError v-if="form.errors.date">{{ form.errors.date }}</FormError>
                 </div>
             </div>
             <div class="flex flex-row justify-end items-center gap-2 px-6 py-4 bg-gray-100 text-right rounded-b-md">
