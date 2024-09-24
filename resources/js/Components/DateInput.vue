@@ -17,11 +17,11 @@ onMounted(() => {
     flatpickr(datePickerInput.value, {
         altInput: true,
         altFormat: "F j, Y H:i",
-        dateFormat: "Y-m-d",
+        dateFormat: "Y-m-d H:i",
         enableTime: true,
-        defaultDate: new Date(new Date().getTime() + 15000*60),
-        minDate: new Date(new Date().getTime() + 15000*60),
-        maxDate: new Date().fp_incr(30),
+        defaultDate: new Date(new Date().getTime()),
+        minDate: new Date(new Date().getTime()),
+        maxDate: new Date().fp_incr(7),
         minuteIncrement: 1
     });
 

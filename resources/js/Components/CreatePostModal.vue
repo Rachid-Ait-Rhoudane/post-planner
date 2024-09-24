@@ -5,8 +5,8 @@ import TextInput from './TextInput.vue';
 import FileInput from './FileInput.vue';
 import FormError from './FormError.vue';
 import { useForm } from '@inertiajs/vue3';
+import CKTextEditor from './CKTextEditor.vue';
 import PrimaryButton from './PrimaryButton.vue';
-import TextAreaInput from './TextAreaInput.vue';
 import SelectChannel from './SelectChannel.vue';
 
 const emit = defineEmits(['close']);
@@ -65,7 +65,7 @@ const sendData = async () => {
             <div class="px-6 pb-4 mt-4 text-sm text-gray-600 space-y-4">
                 <SelectChannel :showCurrentChannelName="true" @changeChannel="(id) => form.channelID = id" :currentChannelID="form.channelID" />
                 <div class="space-y-1">
-                    <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
+                    <CKTextEditor v-model="form.description" placeholder="Write a description" />
                     <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>
                 </div>
                 <div class="space-y-1">

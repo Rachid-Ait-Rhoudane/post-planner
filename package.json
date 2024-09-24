@@ -21,7 +21,11 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-vue": "^7.1.0",
         "chart.js": "^4.4.4",
+        "ckeditor5": "^43.1.0",
+        "ckeditor5-premium-features": "^43.1.0",
+        "emoji.json": "^15.1.0",
         "flatpickr": "^4.6.13",
         "laravel-vite-plugin": "^1.0.5",
         "moment-timezone": "^0.5.45"

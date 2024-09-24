@@ -74,6 +74,8 @@ class ScheduleFacebookPostController extends Controller
             'date' => ['required','date', 'after:' . $now]
         ]);
 
+        $attributes['description'] = strip_tags($attributes['description']);
+
         $date = new Carbon($attributes['date'], $settings['timezone']);
 
         if($request->hasFile('file')) {
@@ -90,7 +92,7 @@ class ScheduleFacebookPostController extends Controller
             if(explode('/', $fileType)[0] === 'image') {
                 $facebookPost = FacebookPost::create([
                     'title' => $request->input('fileTitle'),
-                    'description' => $request->input('description'),
+                    'description' => $attributes['description'],
                     'file_type' => 'image',
                     'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
@@ -111,7 +113,7 @@ class ScheduleFacebookPostController extends Controller
             if(explode('/', $fileType)[0] === 'video') {
                 $facebookPost = FacebookPost::create([
                     'title' => $request->input('fileTitle'),
-                    'description' => $request->input('description'),
+                    'description' => $attributes['description'],
                     'file_type' => 'video',
                     'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
@@ -130,7 +132,7 @@ class ScheduleFacebookPostController extends Controller
             }
         }
         $facebookPost = FacebookPost::create([
-            'description' => $request->input('description'),
+            'description' => $attributes['description'],
             'facebook_page_id' => $page->id,
             'is_published' => false,
             'scheduled_time' => $date
@@ -189,10 +191,12 @@ class ScheduleFacebookPostController extends Controller
             $filePath = Storage::disk('public')->put('/files', $file);
             $fileType = Storage::disk('public')->mimeType($filePath);
 
+            $description = strip_tags($request->input('description'));
+
             if(isset($date)) {
                 $post->update([
                     'title' => $request->input('fileTitle'),
-                    'description' => $request->input('description'),
+                    'description' => $description,
                     'file_type' => explode('/', $fileType)[0],
                     'file_path' => $filePath,
                     'scheduled_time' => $date
@@ -200,7 +204,7 @@ class ScheduleFacebookPostController extends Controller
             } else {
                 $post->update([
                     'title' => $request->input('fileTitle'),
-                    'description' => $request->input('description'),
+                    'description' => $description,
                     'file_type' => explode('/', $fileType)[0],
                     'file_path' => $filePath
                 ]);
@@ -213,12 +217,12 @@ class ScheduleFacebookPostController extends Controller
 
         if(isset($date)) {
             $post->update([
-                'description' => $request->input('description'),
+                'description' => $description,
                 'scheduled_time' => $date
             ]);
         } else {
             $post->update([
-                'description' => $request->input('description')
+                'description' => $description
             ]);
         }
 

@@ -51,9 +51,11 @@ class PublishToFacebookPageController extends Controller
 
     public function store(Request $request) {
 
-        $request->validate([
+        $attributes = $request->validate([
             'description' => ['required']
         ]);
+
+        $attributes['description'] = strip_tags($attributes['description']);
 
         $page = FacebookPage::findOrFail($request->input('channelID'));
 
@@ -77,12 +79,12 @@ class PublishToFacebookPageController extends Controller
             $uploadFileHandle = $this->facebook->startUpload($request->user()->facebook_user_token, $uploadSessionID, 0, Storage::disk('public')->get($filePath), $fileName);
 
             if(explode('/', $fileType)[0] === 'image') {
-                $photoPostID = $this->facebook->publishPhoto($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+                $photoPostID = $this->facebook->publishPhoto($page->page_access_token, $page->page_id, $request->input('fileTitle'), $attributes['description'], $uploadFileHandle);
                 $postInfo = $this->facebook->postInfo($page->page_access_token, $photoPostID['post_id']);
                 FacebookPost::create([
                     'post_id' => $photoPostID['post_id'],
                     'title' => $request->input('fileTitle'),
-                    'description' => $request->input('description'),
+                    'description' => $attributes['description'],
                     'file_type' => 'image',
                     'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
@@ -94,12 +96,12 @@ class PublishToFacebookPageController extends Controller
             }
 
             if(explode('/', $fileType)[0] === 'video') {
-                $videoPostID = $this->facebook->publishVideo($page->page_access_token, $page->page_id, $request->input('fileTitle'), $request->input('description'), $uploadFileHandle);
+                $videoPostID = $this->facebook->publishVideo($page->page_access_token, $page->page_id, $request->input('fileTitle'), $attributes['description'], $uploadFileHandle);
                 $videoPostInfo = $this->facebook->videoPostInfo($page->page_access_token, $videoPostID['id']);
                 FacebookPost::create([
                     'post_id' => $page->page_id . '_' . $videoPostInfo['post_id'],
                     'title' => $request->input('fileTitle'),
-                    'description' => $request->input('description'),
+                    'description' => $attributes['description'],
                     'file_type' => 'video',
                     'file_path' => $filePath,
                     'facebook_page_id' => $page->id,
@@ -111,11 +113,11 @@ class PublishToFacebookPageController extends Controller
             }
         }
 
-        $postID = $this->facebook->publishText($page->page_access_token, $page->page_id, $request->input('description'));
+        $postID = $this->facebook->publishText($page->page_access_token, $page->page_id, $attributes['description']);
         $postInfo = $this->facebook->postInfo($page->page_access_token, $postID['id']);
         FacebookPost::create([
             'post_id' => $postID['id'],
-            'description' => $request->input('description'),
+            'description' => $attributes['description'],
             'facebook_page_id' => $page->id,
             'original_link' => $postInfo['permalink_url']
         ]);

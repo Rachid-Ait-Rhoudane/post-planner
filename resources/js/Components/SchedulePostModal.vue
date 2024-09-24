@@ -6,8 +6,8 @@ import FileInput from './FileInput.vue';
 import FormError from './FormError.vue';
 import DateInput from './DateInput.vue';
 import { useForm } from '@inertiajs/vue3';
+import CKTextEditor from './CKTextEditor.vue';
 import PrimaryButton from './PrimaryButton.vue';
-import TextAreaInput from './TextAreaInput.vue';
 import SelectChannel from './SelectChannel.vue';
 
 const emit = defineEmits(['close']);
@@ -71,7 +71,7 @@ const sendData = async () => {
                     <FormError v-if="form.errors.date">{{ form.errors.date }}</FormError>
                 </div>
                 <div class="space-y-1">
-                    <TextAreaInput v-model="form.description" placeholder="Write a description" rows="10"></TextAreaInput>
+                    <CKTextEditor v-model="form.description" placeholder="Write a description" />
                     <FormError v-if="form.errors.description">{{ form.errors.description }}</FormError>
                 </div>
                 <div class="space-y-1">
