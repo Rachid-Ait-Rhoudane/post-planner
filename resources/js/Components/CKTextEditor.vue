@@ -2,8 +2,7 @@
 
 import 'ckeditor5/ckeditor5.css';
 import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
-
-import emoji from 'emoji.json';
+import emojis from '../../../public/emojis.js';
 import { ref, watch } from 'vue';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import { ClassicEditor, Essentials, Paragraph, SpecialCharacters, SpecialCharactersEssentials } from 'ckeditor5';
@@ -14,14 +13,10 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-let description = ref(`<p>${props.modelValue}</p>`);
-
-let emojis = emoji.map((e) => {
-    return {title: e.name, character: e.char};
-});
+let description = ref(props.modelValue ? `<p>${props.modelValue}</p>` : '');
 
 function SpecialCharactersEmoji( editor ) {
-    editor.plugins.get('SpecialCharacters').addItems( 'Emoji', emojis, { label: 'Emoticons' } );
+    editor.plugins.get('SpecialCharacters').addItems( 'Emoji', emojis(), { label: 'Emoticons' } );
 }
 
 const editor = ref(ClassicEditor);
