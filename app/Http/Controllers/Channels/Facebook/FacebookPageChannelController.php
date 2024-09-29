@@ -7,6 +7,7 @@ use App\Models\FacebookPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -54,6 +55,12 @@ class FacebookPageChannelController extends Controller
 
         if(! $pages) {
             return redirect()->route('channels')->dangerBanner('Connecting your Facebook pages faild');
+        }
+
+        $response = Gate::inspect('connectFacebookPage', [FacebookPage::class, count($pages)]);
+
+        if(! $response->allowed()) {
+            return redirect()->route('channels')->dangerBanner($response->message());
         }
 
         foreach($pages as $page) {

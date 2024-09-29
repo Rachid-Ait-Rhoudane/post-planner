@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref, watch } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import Paginator from './Paginator.vue';
 import TextInput from './TextInput.vue';
 import { router } from '@inertiajs/vue3';
@@ -38,11 +39,15 @@ watch(search, (newValue) => {
 
 <template>
 
-    <div class="p-4">
+    <div class="p-4 space-y-4">
 
         <div class="relative flex justify-between items-center gap-10">
             <h3 class="text-gray-500">All connected channels</h3>
             <button type="button" @click="show=true" class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer capitalize hover:bg-blue-600 text-sm sm:text-base">connect channel</button>
+        </div>
+
+        <div v-if="$page.props.auth.user.plan == 'free'">
+            <p class="text-xs sm:text-sm text-red-500">You’re on the Free Plan. Connect up to 3 channels for free. To add additional channels, you will need to upgrade to the Professional plan. <Link :href="route('plans')" class="text-pop font-bold hover:underline">upgrade your plan</Link></p>
         </div>
 
         <div v-if="channels.data.length > 0" class="relative w-full my-6">

@@ -30,7 +30,7 @@ const disconnectChannel = (id) => {
 
     <div class="py-2 flex items-center gap-3">
         <div class="relative w-fil">
-            <img class="w-12 aspect-square rounded-full" :src="channel.page_profile_picture" alt="facebook page image" />
+            <img class="w-12 aspect-square border border-gray-300 rounded-full" :src="channel.page_profile_picture" alt="facebook page image" />
             <span class="w-5 h-5 absolute right-0 bottom-0 bg-blue-500 rounded-full flex items-center justify-center">
                 <i class="fa-brands fa-facebook-f text-xs text-white"></i>
             </span>

@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
@@ -65,6 +66,8 @@ Route::middleware([
     Route::post('/queue/post', [ScheduleFacebookPostController::class, 'store'])->name('queue-post');
     Route::put('/queue/update/post', [ScheduleFacebookPostController::class, 'update'])->name('queue-update-post');
     Route::delete('/queue/delete/post/{facebookPost}', [ScheduleFacebookPostController::class, 'destroy'])->name('queue-delete-post');
+
+    Route::get('/plans', [PlanController::class, 'create'])->name('plans');
 });
 
 // TODO : unify  the routes naming form
